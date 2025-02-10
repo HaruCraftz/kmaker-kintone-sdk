@@ -1,0 +1,23 @@
+{
+    "name": "create-reno",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "bin": {
+        "create-reno": "index.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Masanobu Sunohara",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "commander": "^13.1.0",
+        "fs-extra": "^11.3.0",
+        "picocolors": "^1.1.1",
+        "prompts": "^2.4.2",
+        "tiged": "^2.12.7"
+    }
+}
