@@ -1,0 +1,34 @@
+# Build
+dist/
+build/
+coverage/
+out/
+outdir/
+
+# Node modules
+node_modules/
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+.envrc
+
+# Test
+test/
+
+# Credentials
+.secret/
+
+# Compiled files
+logs/
+*.log
+*.lock
+*.tsbuildinfo

@@ -1,0 +1,12 @@
+{
+  "name": "reno",
+  "version": "1.0.0",
+  "description": "kintone SDK for Node.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "license": "ISC",
+  "author": "",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

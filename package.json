@@ -1,14 +1,13 @@
 {
     "name": "reno-kintone-sdk",
     "version": "1.0.0",
-    "description": "",
+    "description": "kintone SDK for Node.js",
     "repository": {
         "type": "git",
         "url": "@HaruCraftz/reno-kintone-sdk"
     },
-    "type": "commonjs",
-    "author": "Masanobu Sunohara",
     "license": "ISC",
+    "author": "Masanobu Sunohara",
     "workspaces": [
         "packages/*"
     ]

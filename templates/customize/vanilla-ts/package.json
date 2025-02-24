@@ -1,0 +1,57 @@
+{
+  "name": "kintone-customize-template",
+  "version": "1.0.0",
+  "description": "kintoneカスタマイズ開発テンプレート",
+  "type": "module",
+  "author": "Masanobu Sunohara <sunohara.ms@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "start": "node scripts/start.js",
+    "create:app": "node scripts/create-app.js",
+    "generate:dts": "node scripts/generate-dts.js",
+    "dev": "cross-env NODE_ENV=development webpack --config webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
+    "upload": "node scripts/upload.js",
+    "lint": "npx eslint \"src/**/*.{js,ts,jsx,tsx}\"",
+    "fix": "npm run lint -- --fix",
+    "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx}\"",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run fix",
+      "npm run format"
+    ]
+  },
+  "dependencies": {
+    "@kintone/rest-api-client": "^5.7.0",
+    "kintone-ui-component": "^1.18.0",
+    "sweetalert2": "^11.15.10"
+  },
+  "devDependencies": {
+    "@cybozu/eslint-config": "^23.0.0",
+    "@eslint/js": "^9.18.0",
+    "@kintone/customize-uploader": "^8.0.13",
+    "@kintone/dts-gen": "^8.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.4.2",
+    "prompts": "^2.4.2",
+    "sass-loader": "^16.0.4",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-merge": "^6.0.1"
+  }
+}

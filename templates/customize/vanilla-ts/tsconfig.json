@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "config/*": ["config/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "files": ["node_modules/@kintone/dts-gen/kintone.d.ts"],
+  "include": ["src/**/*.ts"]
+}
