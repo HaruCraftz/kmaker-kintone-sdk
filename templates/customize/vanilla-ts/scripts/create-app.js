@@ -15,6 +15,7 @@ function createInitialAppConfig(appId) {
   return {
     appId,
     apiTokens: {},
+    viewId: {},
     cdn: {
       scope: 'ALL',
       desktop: {
