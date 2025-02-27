@@ -1,12 +1,36 @@
 {
-  "name": "reno",
+  "name": "@sysreno/reno",
   "version": "1.0.0",
   "description": "kintone SDK for Node.js",
-  "type": "module",
   "main": "./dist/index.js",
+  "type": "module",
+  "bin": {
+    "reno": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "types"
+  ],
   "license": "ISC",
   "author": "",
+  "dependencies": {
+    "@kintone/customize-uploader": "^8.0.13",
+    "@kintone/dts-gen": "^8.1.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "commander": "^13.1.0",
+    "css-loader": "^7.1.2",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.0",
+    "picocolors": "^1.1.1",
+    "prompts": "^2.4.2",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2"
+  },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/prompts": "^2.4.9",
     "typescript": "^5.7.3"
   }
 }

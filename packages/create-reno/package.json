@@ -1,16 +1,14 @@
 {
   "name": "create-reno",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "create-reno": "index.js"
   },
-  "keywords": [],
   "author": "Masanobu Sunohara",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "commander": "^13.1.0",
     "fs-extra": "^11.3.0",
     "picocolors": "^1.1.1",
