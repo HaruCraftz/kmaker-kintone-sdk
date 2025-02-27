@@ -1,8 +1,9 @@
 import { program } from "commander";
+import start from "./commands/start.js";
 
-program.name("reno").description("kintone SDK for Node.js");
+program.name("reno").description("reno - kintone SDK for Node.js");
 
-// start
+start();
 // add app
 // generate dts
 // dev
