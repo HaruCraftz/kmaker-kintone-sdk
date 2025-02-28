@@ -1,11 +1,13 @@
 import { program } from "commander";
-import start from "./commands/start.js";
+import setupCommand from "./commands/setup.js";
+import appCommand from "./commands/app.js";
+import genDtsCommand from "./commands/gen-dts.js";
 
-program.name("reno").description("reno - kintone SDK for Node.js");
+program.name("reno").description("🍳 Reno helps your kintone customization.");
 
-start();
-// add app
-// generate dts
+setupCommand();
+appCommand();
+genDtsCommand();
 // dev
 // build
 // upload

@@ -1,1 +1,1 @@
-export const WOKSPACE_DIRECTORY = ".reno";
+export const CONFIG_DIRECTORY = ".reno";

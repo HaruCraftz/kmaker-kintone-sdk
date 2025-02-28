@@ -1,5 +1,2 @@
-export const DEV_SECRET_FILE_NAME = "secret.dev.json";
-export const PROD_SECRET_FILE_NAME = "secret.prod.json";
-
-export const DEV_CONFIG_FILE_NAME = "apps.dev.json";
-export const PROD_CONFIG_FILE_NAME = "apps.prod.json";
+export const PROFILES_FILE_NAME = "profiles.json";
+export const APPS_FILE_NAME = "apps.json";
