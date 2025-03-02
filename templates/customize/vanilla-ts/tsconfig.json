@@ -10,8 +10,12 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "config/*": ["config/*"],
-      "@/*": ["./src/*"]
+      "Config/*": ["./config/*"],
+      "@/*": ["./src/*"],
+      "Components/*": ["./src/components/*"],
+      "Constants/*": ["./src/constants/*"],
+      "Global/*": ["./src/global/*"],
+      "Utils/*": ["./src/utils/*"]
     }
   },
   "files": ["node_modules/@kintone/dts-gen/kintone.d.ts"],

@@ -1,9 +1,9 @@
 import path from "path";
 import fg from "fast-glob";
 
-export async function loadEntries(entryPoint: string) {
+export async function getEntryPoints(entryPath: string) {
   const baseDir = path.posix.join(process.cwd(), "src", "apps");
-  const files = await fg(entryPoint, { cwd: baseDir });
+  const files = await fg(entryPath, { cwd: baseDir });
   return Object.fromEntries(
     files.map((file) => {
       const [appName, platform] = path.dirname(file).split(path.posix.sep);

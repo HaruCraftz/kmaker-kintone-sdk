@@ -1,25 +1,20 @@
-import path from "path";
 import fs from "fs-extra";
-import { fileURLToPath } from "url";
-import { DEV_CONFIG_FILE_NAME, PROD_CONFIG_FILE_NAME } from "../constants/fileName.js";
+import { getAppsConfigPath } from "./app-config.js";
 
-const configFiles: { [env: string]: string } = {
-  development: DEV_CONFIG_FILE_NAME,
-  production: PROD_CONFIG_FILE_NAME,
-};
+function isValidEnvironment(env: string | undefined): env is reno.EnvironmentValue {
+  return env === "development" || env === "staging" || env === "production";
+}
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const nodeEnv = process.env.NODE_ENV;
+const env: reno.EnvironmentValue = isValidEnvironment(nodeEnv) ? nodeEnv : "development";
 
-const env = process.env.NODE_ENV || "development";
+const appsConfigPath = getAppsConfigPath(env);
+const rawAppsConfig = fs.readFileSync(appsConfigPath, "utf8");
+const appsConfig = JSON.parse(rawAppsConfig);
 
-const configPath = path.join(__dirname, configFiles[env]);
-const rawConfig = fs.readFileSync(configPath, "utf8");
-const config = JSON.parse(rawConfig);
-
-if (!fs.existsSync(configPath)) {
-  console.error(`Error: Configuration file not found -> ${configPath}`);
+if (!fs.existsSync(appsConfigPath)) {
+  console.error(`Error: Configuration file not found -> ${appsConfigPath}`);
   process.exit(1);
 }
 
-export default config;
+export default appsConfig;

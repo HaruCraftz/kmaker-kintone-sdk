@@ -1,7 +1,5 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
 import fg from 'fast-glob';
-import webpack from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import appConfig from './config/loader.js';
 
@@ -23,8 +21,12 @@ export default {
   resolve: {
     extensions: ['.ts', '.js'],
     alias: {
-      'config': path.resolve(process.cwd(), 'config'),
-      '@': path.resolve(process.cwd(), 'src'),
+      Config: path.resolve(process.cwd(), 'config'),
+      '@*': path.resolve(process.cwd(), 'src/*'),
+      Components: path.resolve(process.cwd(), 'src/components'),
+      Constants: path.resolve(process.cwd(), 'src/constants'),
+      Global: path.resolve(process.cwd(), 'src/global'),
+      Utils: path.resolve(process.cwd(), 'src/utils'),
     },
   },
   module: {

@@ -14,7 +14,7 @@ type Answers = {
 };
 
 export default function command() {
-  program.command("setup").description("add kintone profile on your environment").action(action);
+  program.command("setup").description("Add kintone profile on your environment.").action(action);
 }
 
 async function action() {
@@ -51,9 +51,6 @@ async function action() {
     ]);
     console.log(""); // prompts後の改行
 
-    // ディレクトリの存在チェックと作成
-    await fs.ensureDir(configDir);
-
     const profilesExists = await fs.pathExists(profilesPath);
     const profiles: reno.Profiles = profilesExists ? await fs.readJson(profilesPath) : {};
 
@@ -64,6 +61,11 @@ async function action() {
 
     const newProfile: reno.Profile = { env, baseUrl, username, password, proxy: "http://localhost:8000" };
     profiles[env] = newProfile;
+
+    // ディレクトリの存在チェックと作成
+    await fs.ensureDir(configDir);
+
+    // プロファイル作成
     await fs.writeJson(profilesPath, profiles, { spaces: 2 });
   } catch (error: any) {
     console.error(`Unexpected error: ${error.message}`);

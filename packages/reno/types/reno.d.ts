@@ -26,4 +26,6 @@ declare namespace reno {
       };
     };
   };
+
+  type AppsConfig = Record<string, AppConfig>;
 }

@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs-extra";
-import { runCommand } from "../lib/command-runner.js";
+import { runCommand } from "../lib/spawn.js";
 
 /**
  * 指定されたアプリフォルダに対して .d.ts ジェネレータを実行する関数
@@ -13,24 +13,24 @@ import { runCommand } from "../lib/command-runner.js";
 export async function generateTypeDefinitionsForApp(
   appsDir: string,
   appName: string,
-  profile: reno.Profile,
   appsConfig: Record<string, reno.AppConfig>,
+  { baseUrl, username, password, proxy }: reno.Profile,
   useProxy: boolean,
 ) {
-  const appDirectory = path.join(appsDir, appName);
+  const appDir = path.join(appsDir, appName);
 
-  if (!(await fs.pathExists(appDirectory))) {
-    throw new Error(`App folder "${appName}" does not exist:\n${appDirectory}`);
+  if (!(await fs.pathExists(appDir))) {
+    throw new Error(`App folder "${appName}" does not exist:\n${appDir}`);
   }
 
-  const { baseUrl, username, password, proxy } = profile;
   const appConfig = appsConfig[appName];
+
   if (!appConfig) {
     throw new Error(`Configuration for app "${appName}" not found.`);
   }
 
   // 出力先の .d.ts ファイルパスを設定
-  const outputFilePath = path.join(appDirectory, "types", "kintone.d.ts");
+  const outputFilePath = path.join(appDir, "types", "kintone.d.ts");
 
   // kintone-dts-gen に渡す引数を組み立てる
   const args: string[] = [

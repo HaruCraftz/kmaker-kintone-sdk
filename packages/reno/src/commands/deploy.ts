@@ -5,7 +5,7 @@ import prompts from "prompts";
 import { loadProfiles } from "../lib/profile.js";
 import { getSubdirectoryNames } from "../lib/sub-directory.js";
 import { loadAppsConfig } from "../lib/app-config.js";
-import { generateTypeDefinitionsForApp } from "./gen-dts-base.js";
+import { deployAppCustomization } from "./deploy-base.js";
 
 type Answers = {
   env: reno.EnvironmentValue;
@@ -14,8 +14,8 @@ type Answers = {
 
 export default function command() {
   program
-    .command("type")
-    .description("Generate type definitions for Kintone app.")
+    .command("deploy")
+    .description("Deploy kintone customization for each environments.")
     .option("-p, --proxy", "proxy")
     .action(action);
 }
@@ -23,14 +23,14 @@ export default function command() {
 async function action(options: { proxy: boolean }) {
   try {
     const cwd = process.cwd();
-    const appsDir = path.join(cwd, "src", "apps");
+    const distDir = path.join(cwd, "dist");
 
-    if (!(await fs.pathExists(appsDir))) {
-      throw new Error(`Required directory not found:\n${appsDir}`);
+    if (!(await fs.pathExists(distDir))) {
+      throw new Error(`Required directory not found: ${distDir}`);
     }
 
-    // apps 内のサブディレクトリを取得
-    const appNames = await getSubdirectoryNames(appsDir);
+    // dist 内のサブディレクトリを取得
+    const appNames = await getSubdirectoryNames(distDir);
 
     // 選択肢作成
     let appChoices = appNames.map((folder) => ({ title: folder, value: folder }));
@@ -50,7 +50,7 @@ async function action(options: { proxy: boolean }) {
       {
         type: "select",
         name: "env",
-        message: "取得先のプロファイルを選択してください:",
+        message: "配置先のプロファイルを選択してください:",
         choices: Object.values(profiles).map((profile) => ({ title: profile.env, value: profile.env })),
         initial: 0,
       },
@@ -63,24 +63,24 @@ async function action(options: { proxy: boolean }) {
       },
     ];
 
-    // ユーザーから入力を取得
+    // ユーザー入力の取得
     const { env, appName }: Answers = await prompts(questions);
     console.log(""); // prompts後の改行
 
     // アプリの設定情報を読み込む
     const appsConfig = await loadAppsConfig(env);
 
-    // "ALL" 選択時は全アプリに対して順次実行、個別選択時は選択アプリのみ実行
+    // "ALL" 選択時は全アプリ、個別選択時は対象アプリのみ処理
     if (appName === "ALL") {
       for (const appName of appNames) {
         try {
-          await generateTypeDefinitionsForApp(appsDir, appName, appsConfig, profiles[env], options.proxy);
+          await deployAppCustomization(appName, appsConfig, profiles[env], options.proxy);
         } catch (err: any) {
-          console.error(`Error processing app "${appName}": ${err.message}`);
+          console.error(`Error processing folder ${appName}: ${err.message}`);
         }
       }
     } else {
-      await generateTypeDefinitionsForApp(appsDir, appName, appsConfig, profiles[env], options.proxy);
+      await deployAppCustomization(appName, appsConfig, profiles[env], options.proxy);
     }
   } catch (error: any) {
     console.error(`Unexpected error: ${error.message}`);

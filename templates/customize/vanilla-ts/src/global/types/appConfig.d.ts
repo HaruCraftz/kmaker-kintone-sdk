@@ -1,6 +1,7 @@
 export type AppConfig = {
   appId: string;
   apiTokens: { [key: string]: string };
+  viewId: { [key: string]: string };
 };
 
 export type GlobalConfig = {
@@ -8,5 +9,5 @@ export type GlobalConfig = {
 };
 
 declare global {
-  const CONFIG_APP: GlobalConfig;
+  const APPS_CONFIG: GlobalConfig;
 }
