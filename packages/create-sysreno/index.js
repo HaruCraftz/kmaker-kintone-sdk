@@ -85,7 +85,7 @@ async function main() {
       process.exit(1);
     }
 
-    console.log(blue(`\nCreating project in ${targetDir}...\n`));
+    console.log(blue(`\nCreating project in ${targetDir}...`));
 
     // リポジトリをクローン
     const emitter = tiged(template, {
@@ -96,7 +96,7 @@ async function main() {
 
     await emitter.clone(targetDir);
 
-    console.log("\nDone. Now run:\n");
+    console.log("\nDone. Now run:");
     console.log(`\ncd ${projectName}\nnpm install`);
   } catch (error) {
     console.error(red(error));

@@ -1,4 +1,4 @@
-import { DefinePlugin, type Configuration } from "webpack";
+import webpack, { type Configuration } from "webpack";
 import { merge } from "webpack-merge";
 import path from "path";
 import fs from "fs-extra";
@@ -89,7 +89,7 @@ export const getWebpackConfig = async (props: { mode: Configuration["mode"]; out
     },
     plugins: [
       new CleanWebpackPlugin(),
-      new DefinePlugin({ APPS_CONFIG: JSON.stringify(appsConfig) }),
+      new webpack.DefinePlugin({ APPS_CONFIG: JSON.stringify(appsConfig) }),
       new MiniCssExtractPlugin({ filename: "[name].css" }),
     ],
   };
