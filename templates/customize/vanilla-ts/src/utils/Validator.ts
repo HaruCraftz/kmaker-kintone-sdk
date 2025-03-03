@@ -33,18 +33,26 @@ export class Validator {
     return true;
   }
 
-  // 電話番号を形式チェック関数
-  validatePhoneNumber(phoneNumber: string) {
-    // 日本の電話番号形式: 携帯電話 (090/080/070) または 家庭用電話 (市外局番2〜4桁-電話番号)
-    const phonePattern = /^0\d{1,4}-\d{1,4}-\d{4}$/;
-    return phonePattern.test(phoneNumber);
+  // Check if the phone number is in the correct format
+  isPhoneNumber(phoneNumber: string): boolean {
+    // Japanese phone number format: Mobile (090/080/070) or Landline (Area code 2-4 digits - Phone number)
+    const phoneNumberPattern = /^0\d{1,4}-\d{1,4}-\d{4}$/;
+    if (!phoneNumberPattern.test(phoneNumber)) {
+      this.errors.push('Invalid phone number format.');
+      return false;
+    }
+    return true;
   }
 
   // 郵便番号を形式チェック関数
-  validatePostalCode(postalCode: string) {
+  isPostalCode(postalCode: string) {
     // 日本の郵便番号形式: 3桁-4桁
     const postalCodePattern = /^\d{3}-\d{4}$/;
-    return postalCodePattern.test(postalCode);
+    if (!postalCodePattern.test(postalCode)) {
+      this.errors.push('Invalid postal code format.');
+      return false;
+    }
+    return true;
   }
 
   // エラーチェック

@@ -1,14 +1,10 @@
 import webpack, { type Configuration } from "webpack";
 import { getWebpackConfig } from "./webpack.config.js";
 
-export const buildWithWebpack = async (props: {
-  mode: Configuration["mode"];
-  entries: Configuration["entry"];
-  outDir: string;
-}) => {
+export const buildWithWebpack = async (props: { mode: Configuration["mode"]; outDir: string }) => {
   try {
-    const { mode, entries, outDir } = props;
-    const config = await getWebpackConfig({ mode, entries, outDir });
+    const { mode, outDir } = props;
+    const config = await getWebpackConfig({ mode, outDir });
 
     console.log("🚀 Building with Webpack...");
 

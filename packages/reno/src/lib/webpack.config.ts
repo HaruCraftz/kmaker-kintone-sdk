@@ -2,28 +2,34 @@ import { DefinePlugin, type Configuration } from "webpack";
 import { merge } from "webpack-merge";
 import path from "path";
 import fs from "fs-extra";
+import fg from "fast-glob";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import appsConfig from "./loader.js";
 
-export const getWebpackConfig = async (props: {
-  mode: Configuration["mode"];
-  entries: Configuration["entry"];
-  outDir: string;
-}) => {
-  const { mode, entries, outDir } = props;
+export const getWebpackConfig = async (props: { mode: Configuration["mode"]; outDir: string }) => {
+  const { mode, outDir } = props;
   const cwd = process.cwd();
   const tsConfigPath = path.join(cwd, "tsconfig.json");
   const styleLoader = MiniCssExtractPlugin.loader;
 
-  const resolveAlias: {
-    plugins?: TsconfigPathsPlugin[];
-    alias?: Record<string, string>;
-  } = {};
-  const rules: { test: RegExp; exclude: RegExp; loader?: string }[] = [];
+  // エントリーポイント
+  const entryPath = "**/{desktop, mobile}/index.{ts,js}";
+  const baseDir = path.posix.join(cwd, "src", "apps");
+  const files = await fg(entryPath, { cwd: baseDir }); // パス検索
+  const entries = Object.fromEntries(
+    files.map((file) => {
+      const [appName, platform] = path.dirname(file).split(path.posix.sep);
+      return [`${appName}/customize.${platform}`, path.posix.join(baseDir, file)];
+    }),
+  );
 
+  const resolveAlias: { plugins?: TsconfigPathsPlugin[]; alias?: Record<string, string> } = {};
+  const rules: { test: RegExp; exclude?: RegExp; loader?: string }[] = [];
+
+  // tsconfigチェック
   if (fs.pathExistsSync(tsConfigPath)) {
     resolveAlias.plugins = [
       new TsconfigPathsPlugin({
@@ -106,7 +112,9 @@ export const getWebpackConfig = async (props: {
 
   if (mode === "production") {
     return merge(commonConfig, prodConfig);
+  } else if (mode === "development") {
+    return merge(commonConfig, devConfig);
+  } else {
+    throw new Error(`Invalid mode: ${mode}`);
   }
-
-  return merge(commonConfig, devConfig);
 };
