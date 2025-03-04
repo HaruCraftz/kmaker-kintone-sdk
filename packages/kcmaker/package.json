@@ -1,7 +1,7 @@
 {
   "name": "kcmaker",
-  "version": "1.0.2",
-  "description": "kintone SDK for Node.js",
+  "version": "1.0.0",
+  "description": "🍳 Kintone Customize Maker",
   "main": "dist/index.js",
   "type": "module",
   "bin": {

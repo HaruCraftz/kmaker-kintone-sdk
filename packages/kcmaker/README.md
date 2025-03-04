@@ -1,3 +1,1 @@
-# reno - System Renovate
-
-kintone SDK for Node.js
+# KCMaker - Kintone Customize Maker
