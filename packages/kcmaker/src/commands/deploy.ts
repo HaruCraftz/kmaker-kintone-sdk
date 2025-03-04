@@ -15,8 +15,8 @@ type Answers = {
 export default function command() {
   program
     .command("deploy")
-    .description("Deploy kintone customization for each environments.")
-    .option("-p, --proxy", "proxy")
+    .description("deploy kintone customization for each environments.")
+    .option("-p, --proxy", "Execute with proxy.")
     .action(action);
 }
 
@@ -50,7 +50,7 @@ async function action(options: { proxy: boolean }) {
       {
         type: "select",
         name: "env",
-        message: "配置先のプロファイルを選択してください:",
+        message: "デプロイ先のプロファイルを選択してください:",
         choices: Object.values(profiles).map((profile) => ({ title: profile.env, value: profile.env })),
         initial: 0,
       },

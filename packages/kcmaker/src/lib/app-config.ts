@@ -2,6 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 import { CONFIG_DIRECTORY } from "../constants/directory.js";
 import { APPS_FILE_NAME } from "../constants/fileName.js";
+import { ENVIRONMENTS } from "../constants/env.js";
 
 /**
  * 初期のアプリ設定情報を作成する関数
@@ -49,7 +50,7 @@ export function getAppsConfigPath(env: reno.EnvironmentValue) {
   const cwd = process.cwd();
   const configDir = path.join(cwd, CONFIG_DIRECTORY);
   const [fileName, ext] = APPS_FILE_NAME.split(".");
-  return path.join(configDir, `${fileName}.${env}.${ext}`);
+  return path.join(configDir, `${fileName}.${ENVIRONMENTS[env].fileSuffix}.${ext}`);
 }
 
 export async function loadAppsConfig(env: reno.EnvironmentValue): Promise<reno.AppsConfig> {

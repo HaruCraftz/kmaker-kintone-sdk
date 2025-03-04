@@ -9,11 +9,13 @@ import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import { getAppsConfigPath } from "./app-config.js";
 
-export const getWebpackConfig = async (props: { mode: Configuration["mode"]; outDir: string }) => {
+export const getWebpackConfig = async (props: { mode: reno.EnvironmentValue; outDir: string }) => {
   const { mode, outDir } = props;
+  const webpackMode: Configuration["mode"] = mode === "production" ? mode : "development";
+
+  // パス
   const cwd = process.cwd();
   const tsConfigPath = path.join(cwd, "tsconfig.json");
-  const styleLoader = MiniCssExtractPlugin.loader;
 
   // エントリーポイント
   const entryPath = "**/{desktop, mobile}/index.{ts,js}";
@@ -29,6 +31,7 @@ export const getWebpackConfig = async (props: { mode: Configuration["mode"]; out
   // コンフィグ
   const resolveAlias: { plugins?: TsconfigPathsPlugin[]; alias?: Record<string, string> } = {};
   const rules: { test: RegExp; exclude?: RegExp; loader?: string }[] = [];
+  const styleLoader = MiniCssExtractPlugin.loader; // style loader
 
   // tsconfigの有無でコンフィグを分ける
   if (fs.pathExistsSync(tsConfigPath)) {
@@ -58,17 +61,12 @@ export const getWebpackConfig = async (props: { mode: Configuration["mode"]; out
   }
 
   // アプリ設定情報読み込み
-  const isValidEnvironment = (env: string | undefined): env is reno.EnvironmentValue => {
-    return env === "development" || env === "staging" || env === "production";
-  };
-  const nodeEnv = process.env.NODE_ENV;
-  const env: reno.EnvironmentValue = isValidEnvironment(nodeEnv) ? nodeEnv : "development";
-  const appsConfigPath = getAppsConfigPath(env);
+  const appsConfigPath = getAppsConfigPath(mode);
   const appsConfig = fs.readJSONSync(appsConfigPath, "utf8");
 
   // webpack共通設定
   const commonConfig: Configuration = {
-    mode,
+    mode: webpackMode,
     target: ["web", "es2023"],
     entry: entries,
     output: {

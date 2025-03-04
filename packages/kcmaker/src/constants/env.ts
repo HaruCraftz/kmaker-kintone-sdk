@@ -4,8 +4,8 @@ export interface EnvironmentOption {
   fileSuffix: string;
 }
 
-export const ENVIRONMENTS: EnvironmentOption[] = [
-  { title: "development", value: "development", fileSuffix: "dev" },
-  { title: "staging", value: "staging", fileSuffix: "stg" },
-  { title: "production", value: "production", fileSuffix: "prod" },
-] as const;
+export const ENVIRONMENTS: Record<reno.EnvironmentValue, EnvironmentOption> = {
+  development: { title: "development", value: "development", fileSuffix: "dev" },
+  staging: { title: "staging", value: "staging", fileSuffix: "stg" },
+  production: { title: "production", value: "production", fileSuffix: "prod" },
+} as const;

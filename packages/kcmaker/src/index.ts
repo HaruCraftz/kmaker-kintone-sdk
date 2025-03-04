@@ -3,16 +3,18 @@ import { program } from "commander";
 import setupCommand from "./commands/setup.js";
 import appCommand from "./commands/app.js";
 import dtsCommand from "./commands/dts.js";
-import devCommand from "./commands/dev.js";
 import buildCommand from "./commands/build.js";
 import deployCommand from "./commands/deploy.js";
 
-program.name("kcmaker").description("🍳 kcmaker helps your kintone customization.");
+program
+  .name("kcmaker")
+  .description("🍳 kcmaker helps your kintone customization.")
+  .helpOption("-h, --help", "read more information")
+  .showHelpAfterError("(add --help for additional information)");
 
 setupCommand();
 appCommand();
 dtsCommand();
-devCommand();
 buildCommand();
 deployCommand();
 

@@ -14,7 +14,7 @@ type Answers = {
 };
 
 export default function command() {
-  program.command("setup").description("Add kintone profile on your environment.").action(action);
+  program.command("setup").description("add kintone profile on your environment.").action(action);
 }
 
 async function action() {
@@ -28,7 +28,7 @@ async function action() {
         type: "select",
         name: "env",
         message: "環境を選択してください:",
-        choices: ENVIRONMENTS.map((env) => ({ title: env.title, value: env.value })),
+        choices: Object.values(ENVIRONMENTS).map((env) => ({ title: env.title, value: env.value })),
       },
       {
         type: "text",
@@ -54,11 +54,6 @@ async function action() {
     const profilesExists = await fs.pathExists(profilesPath);
     const profiles: reno.Profiles = profilesExists ? await fs.readJson(profilesPath) : {};
 
-    if (profiles[env]) {
-      console.error(`Profile "${env}" already exists.`);
-      process.exit(1);
-    }
-
     const newProfile: reno.Profile = { env, baseUrl, username, password, proxy: "http://localhost:8000" };
     profiles[env] = newProfile;
 
@@ -67,6 +62,7 @@ async function action() {
 
     // プロファイル作成
     await fs.writeJson(profilesPath, profiles, { spaces: 2 });
+    console.log(`Profile "${env}" has been saved.`);
   } catch (error: any) {
     console.error(`Unexpected error: ${error.message}`);
     process.exit(1);

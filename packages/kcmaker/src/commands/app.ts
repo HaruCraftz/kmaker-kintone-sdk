@@ -14,7 +14,7 @@ type Answers = {
 };
 
 export default function command() {
-  program.command("app").description("Create a new application configuration.").action(action);
+  program.command("app").description("create a new application configuration.").action(action);
 }
 
 async function action() {
@@ -32,7 +32,7 @@ async function action() {
       {
         type: "select",
         name: "env",
-        message: "取得先のプロファイルを選択してください:",
+        message: "対象のプロファイルを選択してください:",
         choices: Object.values(profiles).map((profile: reno.Profile) => ({ title: profile.env, value: profile.env })),
       },
       {
@@ -51,17 +51,19 @@ async function action() {
     ]);
     console.log(""); // prompts 後に改行
 
-    // 新しいアプリ作業ディレクトリの出力先
-    const appOutputDir = path.join(appsDir, appName);
-
-    if (await fs.pathExists(appOutputDir)) {
-      console.error(`The directory '${appName}' already exists.`);
-      process.exit(1);
-    }
-
     // パッケージ内のアプリテンプレートディレクトリからコピー
     await fs.ensureDir(appsDir);
-    await fs.copy(appTemplateDir, appOutputDir);
+
+    // 新しいアプリ作業ディレクトリの出力先
+    const appOutputDir = path.join(appsDir, appName);
+    const appOutputDirExists = await fs.pathExists(appOutputDir);
+
+    if (!appOutputDirExists) {
+      await fs.copy(appTemplateDir, appOutputDir);
+      console.log(`The directory '${appName}' has been created.`);
+    } else {
+      console.error(`The directory '${appName}' already exists.`);
+    }
 
     // アプリの設定ファイルパスを取得
     const appsConfigPath = getAppsConfigPath(env);
@@ -71,7 +73,7 @@ async function action() {
 
     // アプリ設定を保存
     await saveAppConfig(appsConfigPath, appName, appConfig);
-    console.log(`The folder '${appName}' has been created!`);
+    console.log(`Configuration for app '${appName}' has been saved.`);
   } catch (error: any) {
     console.error(`Unexpected error: ${error.message}`);
     process.exit(1);

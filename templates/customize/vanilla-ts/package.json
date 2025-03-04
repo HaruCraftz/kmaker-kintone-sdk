@@ -6,11 +6,11 @@
   "author": "Masanobu Sunohara <sunohara.ms@gmail.com>",
   "license": "ISC",
   "scripts": {
-    "setup": "npx sysreno setup",
-    "app": "npx sysreno app",
-    "dts": "npx sysreno dts",
-    "dev": "npx sysreno dev",
-    "build": "npx sysreno build",
+    "setup": "npx kcmaker setup",
+    "app": "npx kcmaker app",
+    "dts": "npx kcmaker dts",
+    "dev": "npx kcmaker build",
+    "build": "npx kcmaker build --prod",
     "lint": "npx eslint \"src/**/*.{js,ts,jsx,tsx}\"",
     "fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx}\"",
@@ -36,7 +36,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "^3.4.2",
-    "sysreno": "^1.0.1",
+    "kcmaker": "^1.0.1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   }

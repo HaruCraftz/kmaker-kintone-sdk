@@ -15,8 +15,8 @@ type Answers = {
 export default function command() {
   program
     .command("dts")
-    .description("Generate type definitions for Kintone app.")
-    .option("-p, --proxy", "proxy")
+    .description("generate type definitions for Kintone app.")
+    .option("-p, --proxy", "Execute with proxy.")
     .action(action);
 }
 
