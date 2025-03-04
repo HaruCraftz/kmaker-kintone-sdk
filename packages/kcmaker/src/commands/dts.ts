@@ -5,7 +5,7 @@ import prompts from "prompts";
 import { loadProfiles } from "../lib/profile.js";
 import { getSubdirectoryNames } from "../lib/sub-directory.js";
 import { loadAppsConfig } from "../lib/app-config.js";
-import { generateTypeDefinitionsForApp } from "./gen-dts-base.js";
+import { generateTypeDefinitionsForApp } from "./dts-base.js";
 
 type Answers = {
   env: reno.EnvironmentValue;
@@ -14,7 +14,7 @@ type Answers = {
 
 export default function command() {
   program
-    .command("type")
+    .command("dts")
     .description("Generate type definitions for Kintone app.")
     .option("-p, --proxy", "proxy")
     .action(action);

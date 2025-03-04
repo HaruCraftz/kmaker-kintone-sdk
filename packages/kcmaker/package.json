@@ -1,11 +1,11 @@
 {
-  "name": "sysreno",
+  "name": "kcmaker",
   "version": "1.0.2",
   "description": "kintone SDK for Node.js",
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "sysreno": "dist/index.js"
+    "kcmaker": "dist/index.js"
   },
   "files": [
     "dist",

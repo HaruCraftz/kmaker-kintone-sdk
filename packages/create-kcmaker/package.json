@@ -1,10 +1,10 @@
 {
-  "name": "create-sysreno",
-  "version": "1.0.2",
+  "name": "create-kcmaker",
+  "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "create-sysreno": "index.js"
+    "create-kcmaker": "index.js"
   },
   "author": "Masanobu Sunohara",
   "license": "ISC",

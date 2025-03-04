@@ -21,7 +21,7 @@ npm install
 3. 環境情報を設定する
 
 ```
-npm run start
+npm run setup
 ```
 
 4. 開発するアプリの情報と作業ディレクトリを設定する
@@ -29,13 +29,13 @@ npm run start
 - 開発するアプリを追加するときは全てこのコマンドで実行する
 
 ```
-npm run create:app
+npm run app
 ```
 
 4. アプリの型情報を取得する
 
 ```
-npm run generate:dts
+npm run dts
 ```
 
 # 開発
@@ -58,8 +58,7 @@ nom run build
 root/
 ├── config/                        # 設定管理
 │   ├── apps.dev.json              # 開発環境アプリ情報
-│   ├── apps.prod.json             # 本番環境アプリ情報
-│   └── loader.js                  # 設定の読み込み
+│   └── apps.prod.json             # 本番環境アプリ情報
 │
 ├── scripts/                       # スクリプト管理
 │   ├── start.js                   # 環境情報の設定
