@@ -1,1 +1,1 @@
-# KCMaker - Kintone Customize Maker
+# KCMaker - Kintone Customization Maker
