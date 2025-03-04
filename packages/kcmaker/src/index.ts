@@ -7,7 +7,7 @@ import devCommand from "./commands/dev.js";
 import buildCommand from "./commands/build.js";
 import deployCommand from "./commands/deploy.js";
 
-program.name("kustom").description("🍳 kustom helps your kintone customization.");
+program.name("kcmaker").description("🍳 kcmaker helps your kintone customization.");
 
 setupCommand();
 appCommand();

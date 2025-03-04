@@ -7,7 +7,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
-import appsConfig from "./loader.js";
+import { getAppsConfigPath } from "./app-config.js";
 
 export const getWebpackConfig = async (props: { mode: Configuration["mode"]; outDir: string }) => {
   const { mode, outDir } = props;
@@ -26,10 +26,11 @@ export const getWebpackConfig = async (props: { mode: Configuration["mode"]; out
     }),
   );
 
+  // コンフィグ
   const resolveAlias: { plugins?: TsconfigPathsPlugin[]; alias?: Record<string, string> } = {};
   const rules: { test: RegExp; exclude?: RegExp; loader?: string }[] = [];
 
-  // tsconfigチェック
+  // tsconfigの有無でコンフィグを分ける
   if (fs.pathExistsSync(tsConfigPath)) {
     resolveAlias.plugins = [
       new TsconfigPathsPlugin({
@@ -56,6 +57,16 @@ export const getWebpackConfig = async (props: { mode: Configuration["mode"]; out
     });
   }
 
+  // アプリ設定情報読み込み
+  const isValidEnvironment = (env: string | undefined): env is reno.EnvironmentValue => {
+    return env === "development" || env === "staging" || env === "production";
+  };
+  const nodeEnv = process.env.NODE_ENV;
+  const env: reno.EnvironmentValue = isValidEnvironment(nodeEnv) ? nodeEnv : "development";
+  const appsConfigPath = getAppsConfigPath(env);
+  const appsConfig = fs.readJSONSync(appsConfigPath, "utf8");
+
+  // webpack共通設定
   const commonConfig: Configuration = {
     mode,
     target: ["web", "es2023"],
@@ -94,6 +105,7 @@ export const getWebpackConfig = async (props: { mode: Configuration["mode"]; out
     ],
   };
 
+  // webpack環境別設定
   const prodConfig: Configuration = {
     optimization: {
       minimize: true,
@@ -105,7 +117,6 @@ export const getWebpackConfig = async (props: { mode: Configuration["mode"]; out
       ],
     },
   };
-
   const devConfig: Configuration = {
     devtool: "inline-source-map",
   };
