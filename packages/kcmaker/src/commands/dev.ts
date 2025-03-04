@@ -4,8 +4,8 @@ import { buildWithWebpack } from "../lib/webpack.js";
 
 export default function command() {
   program
-    .command("build")
-    .description("Build the project for production.")
+    .command("dev")
+    .description("Build the project for development.")
     .option("-o, --outdir <outdir>", "Output directory.", "dist")
     .action(action);
 }
