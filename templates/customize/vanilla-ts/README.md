@@ -1,10 +1,8 @@
-# Kintone SDK
+# KCMaker - 🍳 Kintone Customization Maker 🍳
 
-Sys-Reno Kintone SDK
+kintone SDK for Node.js
 
-## Setup
-
-### Getting Start
+## Getting Start
 
 1. プロジェクトを作成する
 
@@ -32,13 +30,13 @@ npm run setup
 npm run app
 ```
 
-4. アプリの型情報を取得する
+4. アプリの型情報を取得する(typescriptのみ)
 
 ```
 npm run dts
 ```
 
-# 開発
+## 開発
 
 ### 開発環境へのデプロイ
 

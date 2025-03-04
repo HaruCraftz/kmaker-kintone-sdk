@@ -9,11 +9,13 @@
     "setup": "npx kcmaker setup",
     "app": "npx kcmaker app",
     "dts": "npx kcmaker dts",
-    "dev": "npx kcmaker build",
-    "build": "npx kcmaker build --prod",
+    "dev": "npx kcmaker build --mode development && npx kcmaker deploy",
+    "stg": "npx kcmaker build --mode staging && npx kcmaker deploy",
+    "build": "npx kcmaker build --mode production && npx kcmaker deploy",
     "lint": "npx eslint \"src/**/*.{js,ts,jsx,tsx}\"",
     "fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx}\"",
+    "husky": "npx husky init && echo npx lint-staged> .husky/pre-commit",
     "prepare": "husky"
   },
   "lint-staged": {
