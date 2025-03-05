@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import { CONFIG_DIRECTORY } from "../constants/directory.js";
 import { PROFILES_FILE_NAME } from "../constants/fileName.js";
 
-export async function loadProfiles(): Promise<reno.Profiles> {
+export async function loadProfiles(): Promise<Kcmaker.Profiles> {
   const cwd = process.cwd();
   const configDir = path.join(cwd, CONFIG_DIRECTORY);
   const profilesPath = path.join(configDir, PROFILES_FILE_NAME);

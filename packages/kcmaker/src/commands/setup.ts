@@ -7,7 +7,7 @@ import { PROFILES_FILE_NAME } from "../constants/fileName.js";
 import { ENVIRONMENTS } from "../constants/env.js";
 
 type Answers = {
-  env: reno.EnvironmentValue;
+  env: Kcmaker.EnvironmentValue;
   baseUrl: string;
   username: string;
   password: string;
@@ -52,9 +52,9 @@ async function action() {
     console.log(""); // prompts後の改行
 
     const profilesExists = await fs.pathExists(profilesPath);
-    const profiles: reno.Profiles = profilesExists ? await fs.readJson(profilesPath) : {};
+    const profiles: Kcmaker.Profiles = profilesExists ? await fs.readJson(profilesPath) : {};
 
-    const newProfile: reno.Profile = { env, baseUrl, username, password, proxy: "http://localhost:8000" };
+    const newProfile: Kcmaker.Profile = { env, baseUrl, username, password, proxy: "http://localhost:8000" };
     profiles[env] = newProfile;
 
     // ディレクトリの存在チェックと作成

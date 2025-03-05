@@ -8,7 +8,7 @@ import { loadAppsConfig } from "../lib/app-config.js";
 import { generateTypeDefinitionsForApp } from "./dts-base.js";
 
 type Answers = {
-  env: reno.EnvironmentValue;
+  env: Kcmaker.EnvironmentValue;
   appName: string;
 };
 
@@ -16,7 +16,7 @@ export default function command() {
   program
     .command("dts")
     .description("generate type definitions for Kintone app.")
-    .option("-p, --proxy", "Execute with proxy.")
+    .option("--proxy", "Execute with proxy.")
     .action(action);
 }
 

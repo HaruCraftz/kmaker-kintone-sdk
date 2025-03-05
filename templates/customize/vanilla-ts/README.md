@@ -7,7 +7,7 @@ kintone SDK for Node.js
 1. プロジェクトを作成する
 
 ```
-npm create reno
+npm create kcmaker
 ```
 
 2. 依存関係をインストール

@@ -1,7 +1,7 @@
 import webpack, { type Configuration } from "webpack";
 import { getWebpackConfig } from "./webpack.config.js";
 
-export const buildWithWebpack = async (props: { mode: reno.EnvironmentValue; outDir: string }) => {
+export const buildWithWebpack = async (props: { mode: Kcmaker.EnvironmentValue; outDir: string }) => {
   try {
     const { mode, outDir } = props;
     const config = await getWebpackConfig({ mode, outDir });

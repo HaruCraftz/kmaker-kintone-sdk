@@ -13,8 +13,8 @@ import { runCommand } from "../lib/spawn.js";
 export async function generateTypeDefinitionsForApp(
   appsDir: string,
   appName: string,
-  appsConfig: Record<string, reno.AppConfig>,
-  { baseUrl, username, password, proxy }: reno.Profile,
+  appsConfig: Record<string, Kcmaker.AppConfig>,
+  { baseUrl, username, password, proxy }: Kcmaker.Profile,
   useProxy: boolean,
 ) {
   const appDir = path.join(appsDir, appName);

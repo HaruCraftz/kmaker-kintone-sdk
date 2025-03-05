@@ -9,7 +9,7 @@ import { ENVIRONMENTS } from "../constants/env.js";
  * @param appId アプリID
  * @returns 初期のアプリ設定情報
  */
-export function getDefaultAppConfig(appId: number): reno.AppConfig {
+export function getDefaultAppConfig(appId: number): Kcmaker.AppConfig {
   return {
     appId,
     apiTokens: {},
@@ -33,9 +33,13 @@ export function getDefaultAppConfig(appId: number): reno.AppConfig {
  * @param appName アプリケーション名
  * @param appConfig アプリケーション設定情報
  */
-export async function saveAppConfig(appsConfigPath: string, appName: string, appConfig: reno.AppConfig): Promise<void> {
+export async function saveAppConfig(
+  appsConfigPath: string,
+  appName: string,
+  appConfig: Kcmaker.AppConfig,
+): Promise<void> {
   try {
-    let config: Record<string, reno.AppConfig> = {};
+    let config: Record<string, Kcmaker.AppConfig> = {};
     if (await fs.pathExists(appsConfigPath)) {
       config = await fs.readJson(appsConfigPath);
     }
@@ -46,14 +50,14 @@ export async function saveAppConfig(appsConfigPath: string, appName: string, app
   }
 }
 
-export function getAppsConfigPath(env: reno.EnvironmentValue) {
+export function getAppsConfigPath(env: Kcmaker.EnvironmentValue) {
   const cwd = process.cwd();
   const configDir = path.join(cwd, CONFIG_DIRECTORY);
   const [fileName, ext] = APPS_FILE_NAME.split(".");
   return path.join(configDir, `${fileName}.${ENVIRONMENTS[env].fileSuffix}.${ext}`);
 }
 
-export async function loadAppsConfig(env: reno.EnvironmentValue): Promise<reno.AppsConfig> {
+export async function loadAppsConfig(env: Kcmaker.EnvironmentValue): Promise<Kcmaker.AppsConfig> {
   try {
     const appsConfigPath = getAppsConfigPath(env);
 

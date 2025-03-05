@@ -4,7 +4,7 @@ import setupCommand from "./commands/setup.js";
 import appCommand from "./commands/app.js";
 import dtsCommand from "./commands/dts.js";
 import buildCommand from "./commands/build.js";
-import deployCommand from "./commands/deploy.js";
+import deployCommand from "./commands/launch.js";
 
 program
   .name("kcmaker")

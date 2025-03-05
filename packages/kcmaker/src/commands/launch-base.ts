@@ -7,8 +7,8 @@ import { runCommand } from "../lib/spawn.js";
  */
 export async function deployAppCustomization(
   appName: string,
-  appsConfig: reno.AppsConfig,
-  { baseUrl, proxy, username, password }: reno.Profile,
+  appsConfig: Kcmaker.AppsConfig,
+  { baseUrl, proxy, username, password }: Kcmaker.Profile,
   useProxy: boolean,
 ) {
   const cwd = process.cwd();

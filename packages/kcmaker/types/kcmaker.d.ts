@@ -1,4 +1,4 @@
-declare namespace reno {
+declare namespace Kcmaker {
   type EnvironmentValue = "development" | "staging" | "production";
 
   type Profile = {

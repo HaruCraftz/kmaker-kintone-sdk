@@ -8,7 +8,7 @@ import { loadProfiles } from "../lib/profile.js";
 import { getAppsConfigPath, getDefaultAppConfig, saveAppConfig } from "../lib/app-config.js";
 
 type Answers = {
-  env: reno.EnvironmentValue;
+  env: Kcmaker.EnvironmentValue;
   appName: string;
   appId: number;
 };
@@ -33,7 +33,10 @@ async function action() {
         type: "select",
         name: "env",
         message: "対象のプロファイルを選択してください:",
-        choices: Object.values(profiles).map((profile: reno.Profile) => ({ title: profile.env, value: profile.env })),
+        choices: Object.values(profiles).map((profile: Kcmaker.Profile) => ({
+          title: profile.env,
+          value: profile.env,
+        })),
       },
       {
         type: "text",

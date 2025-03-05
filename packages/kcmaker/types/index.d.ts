@@ -1,1 +1,1 @@
-/// <reference path="reno.d.ts" />
+/// <reference path="kcmaker.d.ts" />

@@ -11,12 +11,12 @@ const { blue, cyan, red, yellow } = colors;
 const TEMPLATES = {
   "customize-vanilla-ts": {
     title: "customize(vanilla-ts)",
-    repo: "HaruCraftz/reno-kintone-sdk/templates/customize/vanilla-ts",
+    repo: "HaruCraftz/kcmaker-kintone-sdk/templates/customize/vanilla-ts",
     color: cyan,
   },
   "customize-vanilla-js": {
     title: "customize(vanilla-js)",
-    repo: "HaruCraftz/reno-kintone-sdk/templates/customize/vanilla-js",
+    repo: "HaruCraftz/kcmaker-kintone-sdk/templates/customize/vanilla-js",
     color: yellow,
   },
 };

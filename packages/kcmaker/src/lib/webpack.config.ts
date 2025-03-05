@@ -9,7 +9,7 @@ import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import { getAppsConfigPath } from "./app-config.js";
 
-export const getWebpackConfig = async (props: { mode: reno.EnvironmentValue; outDir: string }) => {
+export const getWebpackConfig = async (props: { mode: Kcmaker.EnvironmentValue; outDir: string }) => {
   const { mode, outDir } = props;
   const webpackMode: Configuration["mode"] = mode === "production" ? mode : "development";
 
@@ -31,7 +31,6 @@ export const getWebpackConfig = async (props: { mode: reno.EnvironmentValue; out
   // コンフィグ
   const resolveAlias: { plugins?: TsconfigPathsPlugin[]; alias?: Record<string, string> } = {};
   const rules: { test: RegExp; exclude?: RegExp; loader?: string }[] = [];
-  const styleLoader = MiniCssExtractPlugin.loader; // style loader
 
   // tsconfigの有無でコンフィグを分ける
   if (fs.pathExistsSync(tsConfigPath)) {
@@ -60,9 +59,21 @@ export const getWebpackConfig = async (props: { mode: reno.EnvironmentValue; out
     });
   }
 
+  // plugins
+  const styleLoader = MiniCssExtractPlugin.loader;
+  const plugins: Configuration["plugins"] = [];
+
   // アプリ設定情報読み込み
   const appsConfigPath = getAppsConfigPath(mode);
   const appsConfig = fs.readJSONSync(appsConfigPath, "utf8");
+
+  if (appsConfig) {
+    plugins.push(
+      new webpack.DefinePlugin({
+        APPS_CONFIG: JSON.stringify(appsConfig),
+      }),
+    );
+  }
 
   // webpack共通設定
   const commonConfig: Configuration = {
@@ -97,9 +108,10 @@ export const getWebpackConfig = async (props: { mode: reno.EnvironmentValue; out
       ],
     },
     plugins: [
+      //
       new CleanWebpackPlugin(),
-      new webpack.DefinePlugin({ APPS_CONFIG: JSON.stringify(appsConfig) }),
       new MiniCssExtractPlugin({ filename: "[name].css" }),
+      ...plugins,
     ],
   };
 
