@@ -9,9 +9,10 @@
     "setup": "npx kcmaker setup",
     "app": "npx kcmaker app",
     "dts": "npx kcmaker dts",
-    "dev": "npx kcmaker build --mode development && npx kcmaker deploy",
-    "stg": "npx kcmaker build --mode staging && npx kcmaker deploy",
-    "build": "npx kcmaker build --mode production && npx kcmaker deploy",
+    "dev": "npx kcmaker build --mode development",
+    "build": "npx kcmaker build --mode production",
+    "launch": "npx kcmaker launch",
+    "launch:all": "npx kcmaker launch --all",
     "lint": "npx eslint \"src/**/*.{js,ts,jsx,tsx}\"",
     "fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx}\"",
@@ -38,7 +39,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "^3.4.2",
-    "kcmaker": "^1.0.1",
+    "kcmaker": "^1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   }

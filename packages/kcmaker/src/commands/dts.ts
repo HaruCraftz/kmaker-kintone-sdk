@@ -1,7 +1,7 @@
 import { program } from "commander";
 import path from "path";
 import fs from "fs-extra";
-import prompts from "prompts";
+import prompts, { type PromptObject } from "prompts";
 import { loadProfiles } from "../lib/profile.js";
 import { getSubdirectoryNames } from "../lib/sub-directory.js";
 import { loadAppsConfig } from "../lib/app-config.js";
@@ -9,7 +9,7 @@ import { generateTypeDefinitionsForApp } from "./dts-base.js";
 
 type Answers = {
   env: Kcmaker.EnvironmentValue;
-  appName?: string;
+  appNames?: Array<string>;
 };
 
 export default function command() {
@@ -31,18 +31,11 @@ async function action(options: { all?: boolean; proxy?: boolean }) {
     }
 
     // apps 内のサブディレクトリを取得
-    const appNames = await getSubdirectoryNames(appsDir);
+    const appDirNames = await getSubdirectoryNames(appsDir);
 
     const profiles = await loadProfiles();
 
-    const questions: {
-      type: "select" | "multiselect";
-      name: "env" | "appName";
-      message: string;
-      choices?: { title: string; value: string }[];
-      initial?: number;
-      hint?: string;
-    }[] = [
+    const questions: PromptObject<keyof Answers>[] = [
       {
         type: "select",
         name: "env",
@@ -55,10 +48,11 @@ async function action(options: { all?: boolean; proxy?: boolean }) {
     if (!options.all) {
       questions.push({
         type: "multiselect",
-        name: "appName",
+        name: "appNames",
         message: "対象のアプリフォルダを選択してください:",
-        choices: appNames.map((name) => ({ title: name, value: name })),
-        initial: 0,
+        instructions: false,
+        choices: appDirNames.map((name) => ({ title: name, value: name })),
+        min: 1,
         hint: "- Space to select. Return to submit",
       });
     }
@@ -73,23 +67,19 @@ async function action(options: { all?: boolean; proxy?: boolean }) {
     console.log(""); // prompts後の改行
 
     const env = answers.env;
-    const app = options.all ? "ALL" : answers.appName!;
+    const appNames = options.all ? appDirNames : answers.appNames!;
     const useProxy = Boolean(options.proxy);
 
     // アプリの設定情報を読み込む
     const appsConfig = await loadAppsConfig(env);
 
     // "ALL" 選択時は全アプリに対して順次実行、個別選択時は選択アプリのみ実行
-    if (app === "ALL") {
-      for (const appName of appNames) {
-        try {
-          await generateTypeDefinitionsForApp(appsDir, appName, appsConfig, profiles[env], useProxy);
-        } catch (err: any) {
-          console.error(`Error processing app "${appName}": ${err.message}`);
-        }
+    for (const appName of appNames) {
+      try {
+        await generateTypeDefinitionsForApp(appsDir, appName, appsConfig, profiles[env], useProxy);
+      } catch (err: any) {
+        console.error(`Error processing app "${appName}": ${err.message}`);
       }
-    } else {
-      await generateTypeDefinitionsForApp(appsDir, app, appsConfig, profiles[env], useProxy);
     }
   } catch (error: any) {
     console.error(`Unexpected error: \n${error.message}`);

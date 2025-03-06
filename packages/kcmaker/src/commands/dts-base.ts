@@ -55,7 +55,7 @@ export async function generateTypeDefinitionsForApp(
 
   console.log(`\n🚀 Generating type definitions for "${appName}"...`);
 
-  await runCommand("kitnone-dts-gen", args);
+  await runCommand("kintone-dts-gen", args);
 
   console.log(`✅ Type definitions successfully generated for "${appName}".`);
 }

@@ -1,7 +1,7 @@
 import { program, Option } from "commander";
 import path from "path";
 import fs from "fs-extra";
-import prompts from "prompts";
+import prompts, { type PromptObject } from "prompts";
 import { loadProfiles } from "../lib/profile.js";
 import { getSubdirectoryNames } from "../lib/sub-directory.js";
 import { loadAppsConfig } from "../lib/app-config.js";
@@ -12,7 +12,7 @@ import { buildWithWebpack } from "../lib/webpack.js";
 type Answers = {
   mode?: Kcmaker.BuildMode;
   env?: Kcmaker.EnvironmentValue;
-  appName?: string;
+  appNames?: Array<string>;
 };
 
 export default function command() {
@@ -41,18 +41,11 @@ async function action(options: {
     }
 
     // dist 内のサブディレクトリを取得
-    const appNames = await getSubdirectoryNames(distDir);
+    const appDirNames = await getSubdirectoryNames(distDir);
 
     const profiles = await loadProfiles();
 
-    const questions: {
-      type: "select" | "multiselect";
-      name: "env" | "mode" | "appName";
-      message: string;
-      choices?: { title: string; value: string }[];
-      initial?: number;
-      hint?: string;
-    }[] = [];
+    const questions: PromptObject<keyof Answers>[] = [];
 
     if (!options.mode) {
       questions.push({
@@ -77,10 +70,11 @@ async function action(options: {
     if (!options.all) {
       questions.push({
         type: "multiselect",
-        name: "appName",
+        name: "appNames",
         message: "対象のアプリフォルダを選択してください:",
-        choices: appNames.map((name) => ({ title: name, value: name })),
-        initial: 0,
+        instructions: false,
+        choices: appDirNames.map((name) => ({ title: name, value: name })),
+        min: 1,
         hint: "- Space to select. Return to submit",
       });
     }
@@ -96,7 +90,7 @@ async function action(options: {
 
     const mode = options.mode || answers.mode!;
     const env = options.env || answers.env!;
-    const app = options.all ? "ALL" : answers.appName!;
+    const appNames = options.all ? appDirNames : answers.appNames!;
     const useProxy = Boolean(options.proxy);
     const profile = profiles[env];
 
@@ -112,16 +106,12 @@ async function action(options: {
     await buildWithWebpack({ mode });
 
     // "ALL" 選択時は全アプリ、個別選択時は対象アプリのみ処理
-    if (app === "ALL") {
-      for (const appName of appNames) {
-        try {
-          await deployAppCustomization(appName, appsConfig, profile, useProxy);
-        } catch (err: any) {
-          console.error(`Error processing folder ${appName}: ${err.message}`);
-        }
+    for (const appName of appNames) {
+      try {
+        await deployAppCustomization(appName, appsConfig, profile, useProxy);
+      } catch (err: any) {
+        console.error(`Error processing folder ${appName}: ${err.message}`);
       }
-    } else {
-      await deployAppCustomization(app, appsConfig, profile, useProxy);
     }
   } catch (error: any) {
     console.error(`Unexpected error: \n${error.message}`);
