@@ -49,25 +49,27 @@ async function main() {
       template = getTemplateFromOption(program.opts().template);
     } else {
       // 対話モード
-      const response = await prompts([
-        {
-          type: "text",
-          name: "projectName",
-          message: "Project name:",
-          initial: "my-kintone-app",
-        },
-        {
-          type: "select",
-          name: "template",
-          message: "Select a template:",
-          choices: Object.values(TEMPLATES).map((t) => ({ title: t.color(t.title), value: t.repo })),
-        },
+      const response = await prompts(
+        [
+          {
+            type: "text",
+            name: "projectName",
+            message: "Project name:",
+            initial: "my-kintone-app",
+          },
+          {
+            type: "select",
+            name: "template",
+            message: "Select a template:",
+            choices: Object.values(TEMPLATES).map((t) => ({ title: t.color(t.title), value: t.repo })),
+          },
+        ],
         {
           onCancel: () => {
             throw new Error(red("✖") + " Operation cancelled");
           },
         },
-      ]);
+      );
       projectName = response.projectName;
       template = response.template;
     }

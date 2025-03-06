@@ -8,7 +8,7 @@ import { runCommand } from "../lib/spawn.js";
 export async function deployAppCustomization(
   appName: string,
   appsConfig: Kcmaker.AppsConfig,
-  { baseUrl, proxy, username, password }: Kcmaker.Profile,
+  { baseUrl, username, password, proxy }: Kcmaker.Profile,
   useProxy: boolean,
 ) {
   const cwd = process.cwd();
@@ -20,6 +20,7 @@ export async function deployAppCustomization(
 
   // customize-manifest.jsonを更新（上書き）
   const manifestPath = path.join(cwd, "customize-manifest.json");
+  await fs.ensureFile(manifestPath); // ファイルが存在しない場合は作成
   const mergedManifest = { app: appConfig.appId, ...appConfig.cdn };
   await fs.writeJson(manifestPath, mergedManifest, { spaces: 2 });
 

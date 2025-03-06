@@ -23,32 +23,40 @@ async function action() {
     const configDir = path.join(cwd, CONFIG_DIRECTORY);
     const profilesPath = path.join(configDir, PROFILES_FILE_NAME);
 
-    const { env, baseUrl, username, password }: Answers = await prompts([
+    const { env, baseUrl, username, password }: Answers = await prompts(
+      [
+        {
+          type: "select",
+          name: "env",
+          message: "環境を選択してください:",
+          choices: Object.values(ENVIRONMENTS).map((env) => ({ title: env.title, value: env.value })),
+        },
+        {
+          type: "text",
+          name: "baseUrl",
+          message: "URLを入力してください:",
+          initial: "https://example.cybozu.com",
+        },
+        {
+          type: "text",
+          name: "username",
+          message: "ユーザー名を入力してください:",
+          validate: (input: string) => (input.trim() !== "" ? true : "ユーザー名を入力してください"),
+        },
+        {
+          type: "password",
+          name: "password",
+          message: "パスワードを入力してください:",
+          validate: (input: string) => (input.trim() !== "" ? true : "パスワードを入力してください"),
+        },
+      ],
       {
-        type: "select",
-        name: "env",
-        message: "環境を選択してください:",
-        choices: Object.values(ENVIRONMENTS).map((env) => ({ title: env.title, value: env.value })),
+        onCancel: () => {
+          console.log("Operation canceled.");
+          process.exit(0);
+        },
       },
-      {
-        type: "text",
-        name: "baseUrl",
-        message: "URLを入力してください:",
-        initial: "https://example.cybozu.com",
-      },
-      {
-        type: "text",
-        name: "username",
-        message: "ユーザー名を入力してください:",
-        validate: (input: string) => (input.trim() !== "" ? true : "ユーザー名を入力してください"),
-      },
-      {
-        type: "password",
-        name: "password",
-        message: "パスワードを入力してください:",
-        validate: (input: string) => (input.trim() !== "" ? true : "パスワードを入力してください"),
-      },
-    ]);
+    );
     console.log(""); // prompts後の改行
 
     const profilesExists = await fs.pathExists(profilesPath);
@@ -64,7 +72,7 @@ async function action() {
     await fs.writeJson(profilesPath, profiles, { spaces: 2 });
     console.log(`Profile "${env}" has been saved.`);
   } catch (error: any) {
-    console.error(`Unexpected error: ${error.message}`);
+    console.error(`Unexpected error: \n${error.message}`);
     process.exit(1);
   }
 }

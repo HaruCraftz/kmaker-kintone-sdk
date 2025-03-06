@@ -1,23 +1,18 @@
 import { program, Option } from "commander";
-import path from "path";
 import { buildWithWebpack } from "../lib/webpack.js";
-import { ENVIRONMENTS } from "../constants/env.js";
 
 export default function command() {
   program
     .command("build")
     .description("build the project for production.")
-    .option("-o, --outdir <outdir>", "Output directory.", "dist")
-    .addOption(new Option("-m, --mode <mode>", "Build mode.").choices(["development", "production"]))
+    .option("-o, --outdir <outdir>", "output directory.", "dist")
+    .addOption(
+      new Option("-m, --mode <mode>", "build mode.").choices(["development", "production"]).default("development"),
+    )
     .action(action);
 }
 
-export async function action(options: { outdir: string; mode: Kcmaker.EnvironmentValue }) {
-  const { mode, outdir } = options;
-  if (!(mode in ENVIRONMENTS)) {
-    console.error(`Invalid mode: ${mode}`);
-    program.help();
-  }
-  const outDir = path.posix.join(process.cwd(), outdir);
+export async function action(options: { mode: Kcmaker.BuildMode; outdir: string }) {
+  const { mode, outdir: outDir } = options;
   await buildWithWebpack({ mode, outDir });
 }

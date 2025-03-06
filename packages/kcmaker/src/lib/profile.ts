@@ -9,7 +9,8 @@ export async function loadProfiles(): Promise<Kcmaker.Profiles> {
   const profilesPath = path.join(configDir, PROFILES_FILE_NAME);
 
   if (!(await fs.pathExists(profilesPath))) {
-    throw new Error('Please run command "npm run setup" first.');
+    console.error('Profiles not found.\nPlease run command "npm run setup" first.');
+    process.exit(1);
   }
 
   return await fs.readJson(profilesPath);

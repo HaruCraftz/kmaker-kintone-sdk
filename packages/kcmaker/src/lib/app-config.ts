@@ -31,19 +31,19 @@ export function getDefaultAppConfig(appId: number): Kcmaker.AppConfig {
  * 設定ファイルを作成または更新する関数
  * @param appsConfigPath アプリ設定ファイルのパス
  * @param appName アプリケーション名
- * @param appConfig アプリケーション設定情報
+ * @param newAppConfig 新しいアプリケーション設定情報
  */
 export async function saveAppConfig(
   appsConfigPath: string,
   appName: string,
-  appConfig: Kcmaker.AppConfig,
+  newAppConfig: Kcmaker.AppConfig,
 ): Promise<void> {
   try {
     let config: Record<string, Kcmaker.AppConfig> = {};
     if (await fs.pathExists(appsConfigPath)) {
       config = await fs.readJson(appsConfigPath);
     }
-    config[appName] = appConfig;
+    config[appName] = newAppConfig;
     await fs.writeJson(appsConfigPath, config, { spaces: 2 });
   } catch (error: any) {
     throw new Error(`Error saving app config: ${error.message}`);
@@ -63,7 +63,8 @@ export async function loadAppsConfig(env: Kcmaker.EnvironmentValue): Promise<Kcm
 
     // 設定ファイルの存在確認
     if (!(await fs.pathExists(appsConfigPath))) {
-      throw new Error('Please run command "npm run app" first.');
+      console.error(`Apps config file not found: \n${appsConfigPath}`);
+      process.exit(1);
     }
 
     // アプリの設定情報を読み込む

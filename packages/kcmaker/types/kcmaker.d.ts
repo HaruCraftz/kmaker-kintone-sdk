@@ -1,6 +1,8 @@
 declare namespace Kcmaker {
   type EnvironmentValue = "development" | "staging" | "production";
 
+  type BuildMode = "development" | "production";
+
   type Profile = {
     env: EnvironmentValue;
     baseUrl: string;

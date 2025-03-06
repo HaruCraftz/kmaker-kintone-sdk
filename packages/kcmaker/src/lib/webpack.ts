@@ -1,10 +1,10 @@
 import webpack, { type Configuration } from "webpack";
 import { getWebpackConfig } from "./webpack.config.js";
 
-export const buildWithWebpack = async (props: { mode: Kcmaker.EnvironmentValue; outDir: string }) => {
+export const buildWithWebpack = async (props: { mode: Kcmaker.BuildMode; outDir?: string }) => {
   try {
-    const { mode, outDir } = props;
-    const config = await getWebpackConfig({ mode, outDir });
+    const { mode, outDir = "dist" } = props;
+    const config = getWebpackConfig({ mode, outDir });
 
     console.log("🚀 Building with Webpack...");
 

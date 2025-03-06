@@ -9,18 +9,16 @@ import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import { getAppsConfigPath } from "./app-config.js";
 
-export const getWebpackConfig = async (props: { mode: Kcmaker.EnvironmentValue; outDir: string }) => {
+export const getWebpackConfig = (props: { mode: Kcmaker.BuildMode; outDir: string }) => {
   const { mode, outDir } = props;
-  const webpackMode: Configuration["mode"] = mode === "production" ? mode : "development";
 
   // パス
   const cwd = process.cwd();
-  const tsConfigPath = path.join(cwd, "tsconfig.json");
 
   // エントリーポイント
   const entryPath = "**/{desktop, mobile}/index.{ts,js}";
   const baseDir = path.posix.join(cwd, "src", "apps");
-  const files = await fg(entryPath, { cwd: baseDir }); // パス検索
+  const files = fg.sync(entryPath, { cwd: baseDir }); // パス検索
   const entries = Object.fromEntries(
     files.map((file) => {
       const [appName, platform] = path.dirname(file).split(path.posix.sep);
@@ -33,10 +31,12 @@ export const getWebpackConfig = async (props: { mode: Kcmaker.EnvironmentValue; 
   const rules: { test: RegExp; exclude?: RegExp; loader?: string }[] = [];
 
   // tsconfigの有無でコンフィグを分ける
-  if (fs.pathExistsSync(tsConfigPath)) {
+  const tsConfigPath = fg.sync("tsconfig.*", { cwd });
+
+  if (tsConfigPath.length > 0) {
     resolveAlias.plugins = [
       new TsconfigPathsPlugin({
-        configFile: tsConfigPath,
+        configFile: "tsconfig.json",
       }),
     ];
     rules.push({
@@ -77,12 +77,12 @@ export const getWebpackConfig = async (props: { mode: Kcmaker.EnvironmentValue; 
 
   // webpack共通設定
   const commonConfig: Configuration = {
-    mode: webpackMode,
+    mode,
     target: ["web", "es2023"],
     entry: entries,
     output: {
       filename: "[name].js",
-      path: path.resolve(outDir),
+      path: path.resolve(cwd, outDir),
     },
     cache: {
       type: "filesystem",
