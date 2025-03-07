@@ -1,19 +1,19 @@
-import globals from 'globals';
-import cybozuConfig from '@cybozu/eslint-config/flat/presets/typescript-prettier.js';
+import cybozuKintoneConfig from '@cybozu/eslint-config/flat/presets/kintone-customize.js';
+import cybozuTsPritterConfig from '@cybozu/eslint-config/flat/presets/typescript-prettier.js';
 
 export default [
-  ...cybozuConfig,
+  // cybozuConfig
+  ...cybozuKintoneConfig,
+  ...cybozuTsPritterConfig,
+  // custom
   {
-    ignores: ['node_modules/*', 'config/**/*', 'dist/**/*', 'scripts/**/*', 'webpack.*'],
+    ignores: ['node_modules/*', 'dist/**/*'],
   },
   {
-    files: ['src/**/*.{js,cjs,mjs,ts,cts,mts,jsx,tsx}'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
+    files: ['src/**/*.ts'],
+    langageOptions: {
       globals: {
-        ...globals.browser,
-        ...globals.node,
+        APPS_CONFIG: 'readonly',
       },
     },
   },

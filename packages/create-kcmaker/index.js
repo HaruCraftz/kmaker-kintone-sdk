@@ -43,6 +43,9 @@ async function main() {
     /** @type { string | undefined } */
     let template;
 
+    const cwd = process.cwd();
+    const pkgPath = path.join(cwd, "package.json");
+
     if (program.args[0] && program.opts().template) {
       // CLIオプション使用時
       projectName = program.args[0];
@@ -74,12 +77,7 @@ async function main() {
       template = response.template;
     }
 
-    if (!projectName) {
-      console.error(red("Error: Project name is required"));
-      process.exit(1);
-    }
-
-    const targetDir = path.join(process.cwd(), projectName);
+    const targetDir = path.join(cwd, projectName);
 
     // ディレクトリが既に存在するかチェック
     if (fs.pathExistsSync(targetDir)) {
@@ -97,6 +95,13 @@ async function main() {
     });
 
     await emitter.clone(targetDir);
+
+    // パッケージ名を変更
+    const pkg = await fs.readJson(pkgPath, "utf-8");
+
+    pkg.name = projectName;
+
+    await fs.writeJson(pkgPath, pkg, "utf-8");
 
     console.log("\nDone. Now run:");
     console.log(`\ncd ${projectName}\nnpm install`);

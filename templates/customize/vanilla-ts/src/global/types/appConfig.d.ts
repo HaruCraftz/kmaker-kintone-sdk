@@ -1,7 +1,7 @@
 export type AppConfig = {
   appId: string;
-  apiTokens: { [key: string]: string };
-  viewId: { [key: string]: string };
+  apiTokens: Record<string, string>;
+  viewId: Record<string, string>;
 };
 
 export type GlobalConfig = {

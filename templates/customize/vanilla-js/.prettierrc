@@ -1,0 +1,9 @@
+{
+  "tabWidth": 2,
+  "printWidth": 150,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "quoteProps": "preserve",
+  "trailingComma": "es5",
+  "endOfLine": "lf"
+}

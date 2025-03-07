@@ -1,6 +1,6 @@
 {
   "name": "kcmaker",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "🍳 Kintone Customization Maker",
   "main": "dist/index.js",
   "type": "module",
@@ -9,7 +9,6 @@
   },
   "files": [
     "dist",
-    "templates",
     "types"
   ],
   "scripts": {
