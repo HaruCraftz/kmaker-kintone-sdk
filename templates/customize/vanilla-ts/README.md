@@ -30,39 +30,38 @@ npm run setup
 npm run app
 ```
 
-4. アプリの型情報を取得する(typescriptのみ)
+4. アプリの型情報を取得する(typescript環境のみ)
 
 ```
 npm run dts
 ```
 
-## 開発
-
-### 開発環境へのデプロイ
+5. 成果物をデプロイする
 
 ```
-npm run dev
+npm run launch
 ```
 
-### 本番環境へのデプロイ
+## Usage (kcmaker)
 
-```
-nom run build
-```
+> kcmaker [command]
 
-# ディレクトリ構成
+- setup add kintone profile on your environment.
+- app create a new application configuration.
+- dts [options] generate type definitions for Kintone app.
+- build [options] build the project for production.
+- launch [options] launch kintone customization for each environments.
+- help [command] display help for command
+
+## ディレクトリ構成
 
 ```
 root/
-├── config/                        # 設定管理
-│   ├── apps.dev.json              # 開発環境アプリ情報
-│   └── apps.prod.json             # 本番環境アプリ情報
-│
-├── scripts/                       # スクリプト管理
-│   ├── start.js                   # 環境情報の設定
-│   ├── create-app.js              # アプリ情報の保管と作業ディレクトリの追加
-│   ├── generate-dts.js            # kintone-dts-gen の実行
-│   └── upload.js                  # kintone-customize-uploader の実行
+├── .kintone/                      # 設定管理
+│   ├── profiles.json              # 環境情報 - setupコマンドによって生成
+│   ├── apps.dev.json              # 開発環境アプリ情報 - appコマンドによって生成
+│   ├── apps.stg.json              # 検証環境アプリ情報 - appコマンドによって生成
+│   └── apps.prod.json             # 本番環境アプリ情報 - appコマンドによって生成
 │
 ├── src/
 │   ├── apps/
@@ -74,22 +73,19 @@ root/
 │   │   │   │   ├── index.ts
 │   │   │   ├── mobile/
 │   │   │   │   ├── index.ts
-│   ├── components/                 # 汎用的なコンポーネントを格納する
+│   ├── components/                 # 汎用的なコンポーネントを格納
 │   ├── constants/                  # 汎用的な変数を格納
-│   ├── global/                     # グローバル変数を格納
+│   ├── global/                     # グローバル変数を格納(appIdやAPIトークンなど)
 │   └── utils/                      # 汎用的な関数を格納
 │
 ├── .husky/                         # huskyの設定ディレクトリ
 ├── .gitignore                      # Git管理対象外の設定
-├── .eslintrc.js                    # ESLint 設定
+├── .eslint.config.js               # ESLint 設定
 ├── .prettierrc                     # Prettier 設定
 ├── customize-manifest.json         # kintone-customize-uploader の実行ファイル
 ├── package.json                    # 依存関係
 ├── README.md                       # プロジェクトの説明
-├── tsconfig.json                   # TypeScript 設定
-├── webpack.common.js               # Webpack 共通設定
-├── webpack.dev.js                  # Webpack dev 環境設定 (webpack-merge 使用)
-└── webpack.prod.js                 # Webpack prod 環境設定 (webpack-merge 使用)
+└── tsconfig.json                   # TypeScript 設定(TS環境のみ)
 ```
 
 # ブランチの運用方法

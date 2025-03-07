@@ -1,9 +1,8 @@
 import globals from 'globals';
-import pluginJs from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import eslintConfigPrettier from 'eslint-config-prettier';
+import cybozuConfig from '@cybozu/eslint-config/flat/presets/typescript-prettier.js';
 
 export default [
+  ...cybozuConfig,
   {
     ignores: ['node_modules/*', 'config/**/*', 'dist/**/*', 'scripts/**/*', 'webpack.*'],
   },
@@ -18,7 +17,4 @@ export default [
       },
     },
   },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  eslintConfigPrettier,
 ];
