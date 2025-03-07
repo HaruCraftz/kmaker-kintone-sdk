@@ -46,12 +46,8 @@ export const getWebpackConfig = (props: { mode: Kcmaker.BuildMode; outDir: strin
     });
   } else {
     resolveAlias.alias = {
+      "@*": path.resolve(cwd, "src/*"),
       Config: path.resolve(cwd, "config"),
-      "@": path.resolve(cwd, "src"),
-      Components: path.resolve(cwd, "src/components"),
-      Constants: path.resolve(cwd, "src/constants"),
-      Global: path.resolve(cwd, "src/global"),
-      Utils: path.resolve(cwd, "src/utils"),
     };
     rules.push({
       test: /\.jsx?$/,
