@@ -12,9 +12,9 @@
     "build": "npx kcmaker build --mode production",
     "launch": "npx kcmaker launch",
     "launch:all": "npx kcmaker launch --all",
-    "lint": "npx eslint \"src/**/*.{js,ts,jsx,tsx}\"",
+    "lint": "npx eslint \"src/**/*.{js,ts}\"",
     "fix": "npm run lint -- --fix",
-    "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx}\"",
+    "format": "prettier --write \"src/**/*.{js,ts}\"",
     "husky": "npx husky init && echo npx lint-staged> .husky/pre-commit",
     "prepare": "husky"
   },
