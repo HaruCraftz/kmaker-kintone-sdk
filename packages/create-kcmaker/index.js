@@ -44,7 +44,6 @@ async function main() {
     let template;
 
     const cwd = process.cwd();
-    const pkgPath = path.join(cwd, "package.json");
 
     if (program.args[0] && program.opts().template) {
       // CLIオプション使用時
@@ -69,7 +68,7 @@ async function main() {
         ],
         {
           onCancel: () => {
-            throw new Error(red("✖") + " Operation cancelled");
+            throw new Error("Operation cancelled");
           },
         },
       );
@@ -97,6 +96,7 @@ async function main() {
     await emitter.clone(targetDir);
 
     // パッケージ名を変更
+    const pkgPath = path.join(cwd, projectName, "package.json");
     const pkg = await fs.readJson(pkgPath, "utf-8");
 
     pkg.name = projectName;
