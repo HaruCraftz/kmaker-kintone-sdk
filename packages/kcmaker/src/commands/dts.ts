@@ -2,7 +2,7 @@ import { program } from "commander";
 import path from "path";
 import fs from "fs-extra";
 import prompts, { type PromptObject } from "prompts";
-import { getSubdirectoryNames } from "../lib/sub-directory.js";
+import { getSubdirectoryNames } from "../lib/directory.js";
 import { loadProfiles } from "../lib/profile.js";
 import { loadAppsConfig } from "../lib/app-config.js";
 import { generateTypeDefinitionsForApp } from "./dts-base.js";

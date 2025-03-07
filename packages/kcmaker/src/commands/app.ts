@@ -3,7 +3,6 @@ import { program } from "commander";
 import path from "path";
 import fs from "fs-extra";
 import prompts from "prompts";
-import { getTemplatesDir } from "../lib/path.js";
 import { loadProfiles } from "../lib/profile.js";
 import { getAppsConfigPath, getDefaultAppConfig, saveAppConfig } from "../lib/app-config.js";
 
@@ -21,9 +20,7 @@ async function action() {
   try {
     const cwd = process.cwd();
     const appsDir = path.join(cwd, "src", "apps");
-
-    const templatesDir = getTemplatesDir();
-    const appTemplateDir = path.join(templatesDir, "app");
+    const appTemplateDir = path.join(cwd, "templates", "app");
 
     const profiles = await loadProfiles();
 

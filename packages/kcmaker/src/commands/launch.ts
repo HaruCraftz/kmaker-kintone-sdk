@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs-extra";
 import prompts, { type PromptObject } from "prompts";
 import { ENVIRONMENTS } from "../constants/env.js";
-import { getSubdirectoryNames } from "../lib/sub-directory.js";
+import { getSubdirectoryNames } from "../lib/directory.js";
 import { loadProfiles } from "../lib/profile.js";
 import { getAppsConfigPath, loadAppsConfig } from "../lib/app-config.js";
 import { buildWithWebpack } from "../lib/webpack.js";
