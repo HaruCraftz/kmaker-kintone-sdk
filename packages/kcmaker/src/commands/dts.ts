@@ -2,8 +2,8 @@ import { program } from "commander";
 import path from "path";
 import fs from "fs-extra";
 import prompts, { type PromptObject } from "prompts";
-import { loadProfiles } from "../lib/profile.js";
 import { getSubdirectoryNames } from "../lib/sub-directory.js";
+import { loadProfiles } from "../lib/profile.js";
 import { loadAppsConfig } from "../lib/app-config.js";
 import { generateTypeDefinitionsForApp } from "./dts-base.js";
 
@@ -76,7 +76,9 @@ async function action(options: { all: boolean; proxy: boolean }) {
     // "ALL" 選択時は全アプリに対して順次実行、個別選択時は選択アプリのみ実行
     for (const appName of appNames) {
       try {
+        console.log(`\n🚀 Generating type definitions for "${appName}"...`);
         await generateTypeDefinitionsForApp(appsDir, appName, appsConfig, profiles[env], useProxy);
+        console.log("✅ Type definitions have been generated.");
       } catch (err: any) {
         console.error(`Error processing app "${appName}": ${err.message}`);
       }

@@ -53,9 +53,5 @@ export async function generateTypeDefinitionsForApp(
     args.push("--proxy", proxy);
   }
 
-  console.log(`\n🚀 Generating type definitions for "${appName}"...`);
-
   await runCommand("kintone-dts-gen", args);
-
-  console.log(`✅ Type definitions successfully generated for "${appName}".`);
 }

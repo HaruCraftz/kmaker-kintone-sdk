@@ -2,12 +2,12 @@ import { program, Option } from "commander";
 import path from "path";
 import fs from "fs-extra";
 import prompts, { type PromptObject } from "prompts";
-import { loadProfiles } from "../lib/profile.js";
-import { getSubdirectoryNames } from "../lib/sub-directory.js";
-import { loadAppsConfig } from "../lib/app-config.js";
-import { deployAppCustomization } from "./launch-base.js";
 import { ENVIRONMENTS } from "../constants/env.js";
+import { getSubdirectoryNames } from "../lib/sub-directory.js";
+import { loadProfiles } from "../lib/profile.js";
+import { getAppsConfigPath, loadAppsConfig } from "../lib/app-config.js";
 import { buildWithWebpack } from "../lib/webpack.js";
+import { deployAppCustomization } from "./launch-base.js";
 
 type Answers = {
   mode?: Kcmaker.BuildMode;
@@ -105,16 +105,22 @@ async function action(options: {
     const appsConfig = await loadAppsConfig(env);
 
     // Webpack
-    await buildWithWebpack({ mode });
+    await buildWithWebpack({ env, mode });
 
     // "ALL" 選択時は全アプリ、個別選択時は対象アプリのみ処理
     for (const appName of appNames) {
       try {
+        console.log(`\n🚀 Launching "${appName}" customization...\n`);
         await deployAppCustomization(appName, appsConfig, profile, options.scope, useProxy);
+        console.log(`\n✅ "${appName}" was launched successfully.`);
       } catch (err: any) {
         console.error(`Error processing folder ${appName}: ${err.message}`);
       }
     }
+
+    // apps.json の cdn を更新
+    const appsConfigPath = getAppsConfigPath(env);
+    await fs.writeJson(appsConfigPath, appsConfig, { spaces: 2 });
   } catch (error: any) {
     console.error(`Unexpected error: \n${error.message}`);
     process.exit(1);

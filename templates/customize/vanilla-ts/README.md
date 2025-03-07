@@ -8,60 +8,70 @@ Kintone SDK for Node.js
 
 > 新規で環境を構築する場合は Getting Start を参照
 
-```
+```bash
 npm install kcmaker
 ```
 
+<br>
+
 ## Getting Start
 
-1. プロジェクトを作成する
+### 1. プロジェクトを作成する
 
-```
+```bash
 npm create kcmaker
 ```
 
-2. 依存関係をインストール
+### 2. 依存関係をインストール
 
-```
+```bash
 npm install
 ```
 
-3. 環境情報を設定する
+### 3. 環境情報を設定する
 
-```
+```bash
 npm run setup
 ```
 
 環境情報には、"develop"と"staging"と"production"を指定できます。
 そして、作成した環境情報ファイルに基づいてこれ以降のコマンドが実行されます。
 
-4. 開発するアプリの情報と作業ディレクトリを設定する
+### 4. 開発するアプリの情報と作業ディレクトリを設定する
 
 > アプリの作業ディレクトリやアプリIDなどの情報を追加するときは全てこのコマンドで実行する。
 > アプリID、APIトークン、ViewIDは、グローバル変数で取得可能
 
-```
+```bash
 npm run app
 ```
 
-4. アプリの型情報を取得する(typescript環境のみ)
+### 5. アプリの型情報を取得する(typescript環境のみ)
 
-```
+```bash
 npm run dts
 ```
 
-5. 成果物をデプロイする
+### 6. 成果物をデプロイする
 
-```
+```bash
 npm run launch
 ```
 
 エントリーポイントは、`root/src/apps/your-app-name/deskop or mobile/index.ts`になります。
 そのためアプリディレクトリ内に"desktopディレクトリかmobileディレクトリのどちらか"と"indexファイル"が必須となります。
 
+<br>
+
 ## Usage
 
 ### kcmaker
+
+> 以下のコマンドでヘルプを表示
+
+```bash
+npx kcmaker --help
+```
 
 ```
 Usage: kcmaker [options] [command]
@@ -79,6 +89,8 @@ Commands:
   launch [options]  launch kintone customization for each environments.
   help [command]    display help for command
 ```
+
+<br>
 
 ## ディレクトリ構成
 
@@ -115,7 +127,7 @@ root/
 └── tsconfig.json                   # TypeScript 設定(TS環境のみ)
 ```
 
-# ブランチの運用方法
+## ブランチの運用方法
 
 GitFeatureFlow
 [GitFlowは使わない！シンプルな「GitFeatureFlow」を紹介します](https://developers.gnavi.co.jp/entry/GitFeatureFlow/koyama)

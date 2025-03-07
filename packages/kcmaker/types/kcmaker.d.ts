@@ -24,6 +24,7 @@ declare namespace Kcmaker {
       };
       mobile: {
         js: string[];
+        css: string[];
       };
     };
   };

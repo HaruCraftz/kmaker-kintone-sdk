@@ -1,12 +1,16 @@
 import webpack, { type Configuration } from "webpack";
 import { getWebpackConfig } from "./webpack.config.js";
 
-export const buildWithWebpack = async (props: { mode: Kcmaker.BuildMode; outDir?: string }) => {
-  try {
-    const { mode, outDir = "dist" } = props;
-    const config = getWebpackConfig({ mode, outDir });
+export const buildWithWebpack = async (props: {
+  env: Kcmaker.EnvironmentValue;
+  mode: Kcmaker.BuildMode;
+  outDir?: string;
+}) => {
+  console.log("🚀 Building with Webpack...");
 
-    console.log("🚀 Building with Webpack...");
+  try {
+    const { env, mode, outDir = "dist" } = props;
+    const config = getWebpackConfig({ env, mode, outDir });
 
     await new Promise<webpack.Stats>((resolve, reject) => {
       webpack(config, (err, stats) => {
@@ -21,6 +25,7 @@ export const buildWithWebpack = async (props: { mode: Kcmaker.BuildMode; outDir?
           const warnings = stats.compilation.warnings.map((warning) => warning.message);
           console.warn("Webpack warnings:", warnings.join("\n"));
         }
+        console.log("✅ Webpack build completed.");
         resolve(stats as webpack.Stats);
       });
     });

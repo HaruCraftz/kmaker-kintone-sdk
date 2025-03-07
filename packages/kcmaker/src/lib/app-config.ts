@@ -21,6 +21,7 @@ export function getDefaultAppConfig(appId: number): Kcmaker.AppConfig {
       },
       mobile: {
         js: [],
+        css: [],
       },
     },
   };

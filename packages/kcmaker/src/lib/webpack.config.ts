@@ -9,14 +9,14 @@ import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import { getAppsConfigPath } from "./app-config.js";
 
-export const getWebpackConfig = (props: { mode: Kcmaker.BuildMode; outDir: string }) => {
-  const { mode, outDir } = props;
+export const getWebpackConfig = (props: { env: Kcmaker.EnvironmentValue; mode: Kcmaker.BuildMode; outDir: string }) => {
+  const { env, mode, outDir } = props;
 
   // パス
   const cwd = process.cwd();
 
   // エントリーポイント
-  const entryPath = "**/{desktop, mobile}/index.{ts,js}";
+  const entryPath = "**/{desktop,mobile}/index.{ts,js}";
   const baseDir = path.posix.join(cwd, "src", "apps");
   const files = fg.sync(entryPath, { cwd: baseDir }); // パス検索
   const entries = Object.fromEntries(
@@ -60,8 +60,8 @@ export const getWebpackConfig = (props: { mode: Kcmaker.BuildMode; outDir: strin
   const plugins: Configuration["plugins"] = [];
 
   // アプリ設定情報読み込み
-  const appsConfigPath = getAppsConfigPath(mode);
-  const appsConfig = fs.readJSONSync(appsConfigPath, "utf8");
+  const appsConfigPath = getAppsConfigPath(env);
+  const appsConfig = fs.readJSONSync(appsConfigPath);
 
   if (appsConfig) {
     plugins.push(
