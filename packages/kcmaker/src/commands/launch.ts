@@ -19,18 +19,20 @@ export default function command() {
   program
     .command("launch")
     .description("launch kintone customization for each environments.")
-    .option("--all", "deploy all apps.")
-    .option("--proxy", "execute with proxy.")
+    .option("--all", "deploy all apps.", false)
+    .option("--proxy", "execute with proxy.", false)
     .addOption(new Option("-m, --mode <mode>", "build mode.").choices(["development", "production"]))
     .addOption(new Option("-e, --env <env>", "target environment.").choices(Object.keys(ENVIRONMENTS)))
+    .addOption(new Option("-s, --scope <scope>", "deploy scope.").choices(["all", "admin", "none"]).default("all"))
     .action(action);
 }
 
 async function action(options: {
-  all?: boolean;
-  proxy?: boolean;
+  all: boolean;
+  proxy: boolean;
   mode?: Kcmaker.BuildMode;
   env?: Kcmaker.EnvironmentValue;
+  scope: "all" | "admin" | "none";
 }) {
   try {
     const cwd = process.cwd();
@@ -108,7 +110,7 @@ async function action(options: {
     // "ALL" 選択時は全アプリ、個別選択時は対象アプリのみ処理
     for (const appName of appNames) {
       try {
-        await deployAppCustomization(appName, appsConfig, profile, useProxy);
+        await deployAppCustomization(appName, appsConfig, profile, options.scope, useProxy);
       } catch (err: any) {
         console.error(`Error processing folder ${appName}: ${err.message}`);
       }

@@ -15,7 +15,6 @@ export function getDefaultAppConfig(appId: number): Kcmaker.AppConfig {
     apiTokens: {},
     viewId: {},
     cdn: {
-      scope: "ALL",
       desktop: {
         js: [],
         css: [],

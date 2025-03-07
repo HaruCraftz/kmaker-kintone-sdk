@@ -18,7 +18,6 @@ declare namespace Kcmaker {
     apiTokens: Record<string, string>;
     viewId: Record<string, string>;
     cdn: {
-      scope: string;
       desktop: {
         js: string[];
         css: string[];

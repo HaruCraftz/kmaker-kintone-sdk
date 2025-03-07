@@ -2,6 +2,12 @@ import path from "path";
 import fs from "fs-extra";
 import { runCommand } from "../lib/spawn.js";
 
+enum Scope {
+  all = "ALL",
+  admin = "ADMIN",
+  none = "NONE",
+}
+
 /**
  * 指定アプリフォルダに対して manifest の更新とアップロード処理を実行する
  */
@@ -9,6 +15,7 @@ export async function deployAppCustomization(
   appName: string,
   appsConfig: Kcmaker.AppsConfig,
   { baseUrl, username, password, proxy }: Kcmaker.Profile,
+  scope: "all" | "admin" | "none",
   useProxy: boolean,
 ) {
   const cwd = process.cwd();
@@ -21,7 +28,7 @@ export async function deployAppCustomization(
   // customize-manifest.jsonを更新（上書き）
   const manifestPath = path.join(cwd, "customize-manifest.json");
   await fs.ensureFile(manifestPath); // ファイルが存在しない場合は作成
-  const mergedManifest = { app: appConfig.appId, ...appConfig.cdn };
+  const mergedManifest = { app: appConfig.appId, scope: Scope[scope], ...appConfig.cdn };
   await fs.writeJson(manifestPath, mergedManifest, { spaces: 2 });
 
   const args: string[] = ["--base-url", baseUrl, "--username", username, "--password", password, manifestPath];

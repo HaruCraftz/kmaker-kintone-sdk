@@ -16,12 +16,12 @@ export default function command() {
   program
     .command("dts")
     .description("generate type definitions for Kintone app.")
-    .option("--all", "deploy all apps.")
-    .option("--proxy", "execute with proxy.")
+    .option("--all", "deploy all apps.", false)
+    .option("--proxy", "execute with proxy.", false)
     .action(action);
 }
 
-async function action(options: { all?: boolean; proxy?: boolean }) {
+async function action(options: { all: boolean; proxy: boolean }) {
   try {
     const cwd = process.cwd();
     const appsDir = path.join(cwd, "src", "apps");
