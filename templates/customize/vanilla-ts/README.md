@@ -1,6 +1,16 @@
 # KCMaker - 🍳 Kintone Customization Maker 🍳
 
-kintone SDK for Node.js
+Kintone SDK for Node.js
+
+<br>
+
+## Installation
+
+> 新規で環境を構築する場合は Getting Start を参照
+
+```
+npm install kcmaker
+```
 
 ## Getting Start
 
@@ -22,9 +32,13 @@ npm install
 npm run setup
 ```
 
+環境情報には、"develop"と"staging"と"production"を指定できます。
+そして、作成した環境情報ファイルに基づいてこれ以降のコマンドが実行されます。
+
 4. 開発するアプリの情報と作業ディレクトリを設定する
 
-- 開発するアプリを追加するときは全てこのコマンドで実行する
+> アプリの作業ディレクトリやアプリIDなどの情報を追加するときは全てこのコマンドで実行する。
+> アプリID、APIトークン、ViewIDは、グローバル変数で取得可能
 
 ```
 npm run app
@@ -42,16 +56,29 @@ npm run dts
 npm run launch
 ```
 
-## Usage (kcmaker)
+エントリーポイントは、`root/src/apps/your-app-name/deskop or mobile/index.ts`になります。
+そのためアプリディレクトリ内に"desktopディレクトリかmobileディレクトリのどちらか"と"indexファイル"が必須となります。
 
-> kcmaker [command]
+## Usage
 
-- setup add kintone profile on your environment.
-- app create a new application configuration.
-- dts [options] generate type definitions for Kintone app.
-- build [options] build the project for production.
-- launch [options] launch kintone customization for each environments.
-- help [command] display help for command
+### kcmaker
+
+```
+Usage: kcmaker [options] [command]
+
+🍳 kcmaker helps your kintone customization.
+
+Options:
+  -h, --help        read more information
+
+Commands:
+  setup             add kintone profile on your environment.
+  app               create a new application configuration.
+  dts [options]     generate type definitions for Kintone app.
+  build [options]   build the project for production.
+  launch [options]  launch kintone customization for each environments.
+  help [command]    display help for command
+```
 
 ## ディレクトリ構成
 
