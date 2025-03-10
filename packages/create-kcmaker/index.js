@@ -103,8 +103,7 @@ async function main() {
 
     await fs.writeJson(pkgPath, pkg, "utf-8");
 
-    console.log("\nDone. Now run:");
-    console.log(`\ncd ${projectName}\nnpm install`);
+    console.log(`\nDone. Now run:\ncd ${projectName}\nnpm install`);
   } catch (error) {
     console.error(red(error));
     process.exit(1);
