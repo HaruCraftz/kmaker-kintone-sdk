@@ -1,5 +1,5 @@
 {
-    "name": "kcmaker-kintone-sdk",
+    "name": "kmaker-kintone-sdk",
     "version": "1.0.0",
     "description": "kintone SDK for Node.js",
     "workspaces": [
