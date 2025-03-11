@@ -1,3 +1,3 @@
-# kcmaker - Kintone Customization Maker
+# KMaker
 
 kintone SDK for Node.js

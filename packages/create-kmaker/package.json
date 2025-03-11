@@ -1,10 +1,10 @@
 {
-  "name": "create-kcmaker",
-  "version": "1.0.8",
+  "name": "create-kmaker",
+  "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "create-kcmaker": "index.js"
+    "create-kmaker": "index.js"
   },
   "author": "Masanobu Sunohara",
   "license": "ISC",
