@@ -97,11 +97,11 @@ async function main() {
 
     // パッケージ名を変更
     const pkgPath = path.join(cwd, projectName, "package.json");
-    const pkg = await fs.readJson(pkgPath, "utf-8");
+    const pkg = await fs.readJson(pkgPath);
 
     pkg.name = projectName;
 
-    await fs.writeJson(pkgPath, pkg, "utf-8");
+    await fs.writeJson(pkgPath, pkg);
 
     console.log(`\nDone. Now run:\ncd ${projectName}\nnpm install`);
   } catch (error) {
