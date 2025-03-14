@@ -1,10 +1,12 @@
 import cybozuKintoneConfig from '@cybozu/eslint-config/flat/presets/kintone-customize.js';
-import cybozuTsPritterConfig from '@cybozu/eslint-config/flat/presets/typescript-prettier.js';
+import cybozuTsConfig from '@cybozu/eslint-config/flat/presets/typescript.js';
+import cybozuPretterConfig from '@cybozu/eslint-config/flat/presets/prettier.js';
 
 export default [
   // cybozuConfig
   ...cybozuKintoneConfig,
-  ...cybozuTsPritterConfig,
+  ...cybozuTsConfig,
+  ...cybozuPretterConfig,
   // custom
   {
     ignores: ['node_modules/*', 'dist/**/*'],
