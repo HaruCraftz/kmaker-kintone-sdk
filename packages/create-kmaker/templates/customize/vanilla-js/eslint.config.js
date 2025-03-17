@@ -11,7 +11,7 @@ export default [
   },
   {
     files: ['src/**/*.js'],
-    langageOptions: {
+    languageOptions: {
       globals: {
         APPS_CONFIG: 'readonly',
       },

@@ -13,7 +13,7 @@ export default [
   },
   {
     files: ['src/**/*.ts'],
-    langageOptions: {
+    languageOptions: {
       globals: {
         APPS_CONFIG: 'readonly',
       },

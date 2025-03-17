@@ -35,7 +35,7 @@ export default function getWebpackConfig(props) {
       type: 'filesystem',
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', 'jsx', '.json'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       plugins: [
         new TsconfigPathsPlugin({
           configFile: 'tsconfig.json',
@@ -45,16 +45,16 @@ export default function getWebpackConfig(props) {
     module: {
       rules: [
         {
-          test: /\.ts$/i,
+          test: /\.tsx?$/,
           exclude: /node_modules/,
           loader: 'ts-loader',
         },
         {
-          test: /\.css$/i, // .css ファイルを対象
+          test: /\.css$/,
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
-          test: /\.s[ac]ss$/i, // .scss または .sass を対象
+          test: /\.s[ac]ss$/,
           use: [
             MiniCssExtractPlugin.loader, // Creates `style` nodes from JS strings
             'css-loader', // Translates CSS into CommonJS

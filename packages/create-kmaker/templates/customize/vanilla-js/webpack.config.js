@@ -34,7 +34,7 @@ export default function getWebpackConfig(props) {
       type: 'filesystem',
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', 'jsx', '.json'],
+      extensions: ['.js', '.jsx', '.json'],
       alias: {
         '@*': path.resolve(cwd, 'src/*'),
         Config: path.resolve(cwd, 'config'),
@@ -47,11 +47,11 @@ export default function getWebpackConfig(props) {
           exclude: /node_modules/,
         },
         {
-          test: /\.css$/i, // .css ファイルを対象
+          test: /\.css$/i,
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
-          test: /\.s[ac]ss$/i, // .scss または .sass を対象
+          test: /\.s[ac]ss$/i,
           use: [
             MiniCssExtractPlugin.loader, // Creates `style` nodes from JS strings
             'css-loader', // Translates CSS into CommonJS
