@@ -5,14 +5,14 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "setup": "npx kcmaker setup",
-    "app": "npx kcmaker app",
-    "dts": "npx kcmaker dts",
-    "dev": "npx kcmaker build --mode development",
-    "build": "npx kcmaker build --mode production",
-    "launch": "npx kcmaker launch",
-    "launch:all": "npx kcmaker launch --all",
-    "lint": "npx eslint \"src/**/*.{js,ts}\"",
+    "setup": "kcmaker setup",
+    "app": "kcmaker app",
+    "dts": "kcmaker dts",
+    "dev": "kcmaker build --mode development",
+    "build": "kcmaker build --mode production",
+    "launch": "kcmaker launch",
+    "launch:all": "kcmaker launch --all",
+    "lint": "eslint \"src/**/*.{js,ts}\"",
     "fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
     "husky": "npx husky init && echo npx lint-staged> .husky/pre-commit",
@@ -25,17 +25,17 @@
     ]
   },
   "dependencies": {
-    "@kintone/rest-api-client": "^5.7.0",
-    "kintone-ui-component": "^1.18.0",
-    "sweetalert2": "^11.15.10"
+    "@kintone/rest-api-client": "^5",
+    "kintone-ui-component": "^1",
+    "sweetalert2": "^11"
   },
   "devDependencies": {
-    "@cybozu/eslint-config": "^24.0.0",
-    "eslint": "^9.18.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.4.3",
-    "prettier": "^3.4.2",
+    "@cybozu/eslint-config": "^24",
+    "eslint": "^9",
+    "husky": "^9",
+    "lint-staged": "^15",
+    "prettier": "^3",
     "kcmaker": "^1",
-    "typescript": "^5.7.3"
+    "typescript": "^5"
   }
 }
