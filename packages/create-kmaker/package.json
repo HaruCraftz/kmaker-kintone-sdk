@@ -1,10 +1,20 @@
 {
   "name": "create-kmaker",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.0.5",
+  "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "create-kmaker": "index.js"
+    "create-kmaker": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "prepare": "npm run build",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "typecheck": "tsc --noEmit"
   },
   "author": "Masanobu Sunohara",
   "license": "ISC",
@@ -12,7 +22,10 @@
     "commander": "^13.1.0",
     "fs-extra": "^11.3.0",
     "picocolors": "^1.1.1",
-    "prompts": "^2.4.2",
-    "tiged": "^2.12.7"
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.2"
   }
 }
