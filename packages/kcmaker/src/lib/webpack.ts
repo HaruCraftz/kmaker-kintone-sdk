@@ -1,18 +1,33 @@
+import path from "path";
 import webpack, { type Configuration } from "webpack";
-import { getWebpackConfig } from "./webpack.config.js";
+import { loadAppsConfig } from "./app-config.js";
 
-export const buildWithWebpack = async (props: {
+async function loadWebpackConfig(options: { mode: Kcmaker.BuildMode; outDir: string; appsConfig: Kcmaker.AppsConfig }) {
+  const configPath = path.resolve(process.cwd(), "webpack.config.js");
+  const configModule = await import(configPath);
+  if (typeof configModule.default === "function") {
+    return configModule.default(options);
+  }
+  return configModule.default;
+}
+
+export async function buildWithWebpack(props: {
   env: Kcmaker.EnvironmentValue;
   mode: Kcmaker.BuildMode;
   outDir?: string;
-}) => {
+}) {
   console.log("🚀 Building with Webpack...");
 
   try {
     const { env, mode, outDir = "dist" } = props;
-    const config = getWebpackConfig({ env, mode, outDir });
 
-    await new Promise<webpack.Stats>((resolve, reject) => {
+    // アプリ設定情報読み込み
+    const appsConfig = await loadAppsConfig(env);
+
+    // webpack設定読み込み
+    const config: Configuration = await loadWebpackConfig({ mode, outDir, appsConfig });
+
+    await new Promise((resolve, reject) => {
       webpack(config, (err, stats) => {
         if (err) {
           return reject(err);
@@ -33,4 +48,4 @@ export const buildWithWebpack = async (props: {
     console.error("Webpack build failed:", error);
     throw error;
   }
-};
+}

@@ -31,11 +31,21 @@
   },
   "devDependencies": {
     "@cybozu/eslint-config": "^24",
+    "clean-webpack-plugin": "^4",
+    "css-loader": "^7",
     "eslint": "^9",
+    "fast-glob": "^3",
     "husky": "^9",
-    "lint-staged": "^15",
-    "prettier": "^3",
     "kcmaker": "^1",
-    "typescript": "^5"
+    "lint-staged": "^15",
+    "mini-css-extract-plugin": "^2",
+    "prettier": "^3",
+    "sass-loader": "^16",
+    "style-loader": "^4",
+    "ts-loader": "^9",
+    "tsconfig-paths-webpack-plugin": "^4",
+    "typescript": "^5",
+    "webpack": "^5",
+    "webpack-merge": "^6"
   }
 }

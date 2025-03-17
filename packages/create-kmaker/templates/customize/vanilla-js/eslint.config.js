@@ -7,7 +7,7 @@ export default [
   ...cybozuPretterConfig,
   // custom
   {
-    ignores: ['node_modules/*', 'dist/**/*'],
+    ignores: ['node_modules/*', 'dist/**/*', 'webpack.*.js'],
   },
   {
     files: ['src/**/*.js'],

@@ -7,7 +7,6 @@
   "scripts": {
     "setup": "kcmaker setup",
     "app": "kcmaker app",
-    "dts": "kcmaker dts",
     "dev": "kcmaker build --mode development",
     "build": "kcmaker build --mode production",
     "launch": "kcmaker launch",
@@ -31,10 +30,18 @@
   },
   "devDependencies": {
     "@cybozu/eslint-config": "^24",
+    "clean-webpack-plugin": "^4",
+    "css-loader": "^7",
     "eslint": "^9",
+    "fast-glob": "^3",
     "husky": "^9",
+    "kcmaker": "^1",
     "lint-staged": "^15",
+    "mini-css-extract-plugin": "^2",
     "prettier": "^3",
-    "kcmaker": "^1"
+    "sass-loader": "^16",
+    "style-loader": "^4",
+    "webpack": "^5",
+    "webpack-merge": "^6"
   }
 }
