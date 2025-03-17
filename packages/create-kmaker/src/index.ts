@@ -6,7 +6,7 @@ import prompts from "prompts";
 import colors from "picocolors";
 import { Command, Option } from "commander";
 
-const { cyan, red, yellow } = colors;
+const { cyan, yellow, red } = colors;
 
 type ColorFunction = (text: string) => string;
 
@@ -32,9 +32,9 @@ const TEMPLATES: Template[] = [
 const program = new Command();
 
 program
-  .argument("[project-name]", "プロジェクト名")
+  .argument("[project-name]", "input your project name")
   .addOption(
-    new Option("-t, --template <type>", "テンプレートタイプ").choices(TEMPLATES.map((template) => template.name)),
+    new Option("-t, --template <type>", "use a specific template").choices(TEMPLATES.map((template) => template.name)),
   )
   .helpOption("-h, --help", "read more information")
   .parse(process.argv);
@@ -68,11 +68,6 @@ async function main() {
     const argTargetDir: string | undefined = program.args[0];
     const argTemplate: string | undefined = program.opts().template;
 
-    const cancel = () => {
-      console.error(red("Operation cancelled"));
-      process.exit(0);
-    };
-
     // 1. Get project name and target dir
     let targetDir = argTargetDir;
     if (!targetDir) {
@@ -83,7 +78,12 @@ async function main() {
           message: "Project name:",
           initial: "my-kintone-app",
         },
-        { onCancel: cancel },
+        {
+          onCancel: () => {
+            console.error(red("Operation cancelled"));
+            return false;
+          },
+        },
       );
       targetDir = formatTargetDir(projectName as string);
     }
@@ -112,12 +112,18 @@ async function main() {
           ],
           initial: 0,
         },
-        { onCancel: cancel },
+        {
+          onCancel: () => {
+            console.error(red("Operation cancelled"));
+            return false;
+          },
+        },
       );
 
       switch (overwrite) {
         case "no":
-          cancel();
+          console.error(red("Operation cancelled"));
+          process.exit(0);
           break;
         case "yes":
           fs.emptyDirSync(targetDir);
@@ -139,7 +145,12 @@ async function main() {
           initial: toValidPackageName(packageName),
           validate: (input: string) => isValidPackageName(input) || "Invalid package.json name",
         },
-        { onCancel: cancel },
+        {
+          onCancel: () => {
+            console.error(red("Operation cancelled"));
+            return false;
+          },
+        },
       );
       packageName = packageNameResult;
     }
@@ -154,7 +165,12 @@ async function main() {
           message: "Select a template:",
           choices: TEMPLATES.map((t) => ({ title: t.color(t.display), value: t.name })),
         },
-        { onCancel: cancel },
+        {
+          onCancel: () => {
+            console.error(red("Operation cancelled"));
+            return false;
+          },
+        },
       );
       template = answers.template;
     }
