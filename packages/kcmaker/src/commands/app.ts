@@ -18,10 +18,6 @@ export default function command() {
 
 async function action() {
   try {
-    const cwd = process.cwd();
-    const appsDir = path.join(cwd, "src", "apps");
-    const appTemplateDir = path.join(cwd, "templates", "app");
-
     const profiles = await loadProfiles();
 
     // ユーザーからアプリ情報の入力を取得
@@ -58,6 +54,10 @@ async function action() {
       },
     );
     console.log(""); // prompts 後に改行
+
+    const cwd = process.cwd();
+    const appsDir = path.join(cwd, "src", "apps");
+    const appTemplateDir = path.join(cwd, "templates", "app");
 
     // パッケージ内のアプリテンプレートディレクトリからコピー
     await fs.ensureDir(appsDir);

@@ -19,10 +19,6 @@ export default function command() {
 
 async function action() {
   try {
-    const cwd = process.cwd();
-    const configDir = path.join(cwd, CONFIG_DIRECTORY);
-    const profilesPath = path.join(configDir, PROFILES_FILE_NAME);
-
     const { env, baseUrl, username, password }: Answers = await prompts(
       [
         {
@@ -58,6 +54,10 @@ async function action() {
       },
     );
     console.log(""); // prompts後の改行
+
+    const cwd = process.cwd();
+    const configDir = path.join(cwd, CONFIG_DIRECTORY);
+    const profilesPath = path.join(configDir, PROFILES_FILE_NAME);
 
     const profilesExists = await fs.pathExists(profilesPath);
     const profiles: Kcmaker.Profiles = profilesExists ? await fs.readJson(profilesPath) : {};
