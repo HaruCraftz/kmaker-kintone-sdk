@@ -19,7 +19,7 @@ npm install kcmaker
 ### 1. プロジェクトを作成する
 
 ```bash
-npm create kcmaker
+npm create kmaker@latest
 ```
 
 ### 2. 依存関係をインストール
