@@ -9,7 +9,7 @@ export default [
   ...cybozuPretterConfig,
   // custom
   {
-    ignores: ['node_modules/*', 'dist/**/*', 'webpack.*.js'],
+    ignores: ['node_modules/*', 'dist/**/*', '**/*.d.ts', 'webpack.*.js'],
   },
   {
     files: ['src/**/*.ts'],

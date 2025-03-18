@@ -11,7 +11,7 @@ export default function getWebpackConfig(props) {
   const cwd = process.cwd();
 
   // エントリーポイント
-  const entryPath = '**/{desktop,mobile}/index.{ts,js}';
+  const entryPath = '**/{desktop,mobile}/index.js';
   const baseDir = path.posix.join(cwd, 'src', 'apps');
   const files = fg.sync(entryPath, { cwd: baseDir }); // パス検索
   const entries = Object.fromEntries(
@@ -43,15 +43,15 @@ export default function getWebpackConfig(props) {
     module: {
       rules: [
         {
-          test: /\.js$/i,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
         },
         {
-          test: /\.css$/i,
+          test: /\.css$/,
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.s[ac]ss$/,
           use: [
             MiniCssExtractPlugin.loader, // Creates `style` nodes from JS strings
             'css-loader', // Translates CSS into CommonJS
@@ -86,11 +86,12 @@ export default function getWebpackConfig(props) {
     devtool: 'inline-source-map',
   };
 
-  if (mode === 'production') {
-    return merge(commonConfig, prodConfig);
-  } else if (mode === 'development') {
-    return merge(commonConfig, devConfig);
+  switch (mode) {
+    case 'production':
+      return merge(commonConfig, prodConfig);
+    case 'development':
+      return merge(commonConfig, devConfig);
+    default:
+      throw new Error(`Invalid build mode: ${mode}`);
   }
-
-  throw new Error(`Invalid mode: ${mode}`);
 }

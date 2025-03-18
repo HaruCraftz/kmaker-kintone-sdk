@@ -89,11 +89,12 @@ export default function getWebpackConfig(props) {
     devtool: 'inline-source-map',
   };
 
-  if (mode === 'production') {
-    return merge(commonConfig, prodConfig);
-  } else if (mode === 'development') {
-    return merge(commonConfig, devConfig);
+  switch (mode) {
+    case 'production':
+      return merge(commonConfig, prodConfig);
+    case 'development':
+      return merge(commonConfig, devConfig);
+    default:
+      throw new Error(`Invalid build mode: ${mode}`);
   }
-
-  throw new Error(`Invalid mode: ${mode}`);
 }
