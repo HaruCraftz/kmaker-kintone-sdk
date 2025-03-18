@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "license": "ISC",
-  "author": "Masanobu Sunohara <sunohara.ms@gmail.com>",
+  "author": "Masanobu Sunohara",
   "dependencies": {
     "@kintone/customize-uploader": "^8.0.13",
     "@kintone/dts-gen": "^8.1.1",
