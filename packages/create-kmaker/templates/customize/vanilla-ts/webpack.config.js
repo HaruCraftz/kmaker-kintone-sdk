@@ -37,6 +37,9 @@ export default function getWebpackConfig({ mode, outDir, appsConfig }) {
       filename: '[name].js',
       path: path.resolve(cwd, outDir),
     },
+    optimization: {
+      emitOnErrors: false,
+    },
     cache: {
       type: 'filesystem',
     },
