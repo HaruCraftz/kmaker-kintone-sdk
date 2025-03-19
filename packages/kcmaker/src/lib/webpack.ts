@@ -1,5 +1,5 @@
 import path from "path";
-import webpack, { Compiler, Stats, type Configuration } from "webpack";
+import webpack, { type Configuration } from "webpack";
 import { loadAppsConfig } from "./app-config.js";
 
 async function loadWebpackConfig(options: { mode: Kcmaker.BuildMode; outDir: string; appsConfig: Kcmaker.AppsConfig }) {
@@ -25,7 +25,7 @@ export async function buildWithWebpack(params: {
     const config: Configuration = await loadWebpackConfig({ mode, outDir, appsConfig });
 
     // webpack の設定ファイルに型アサーションを行います
-    const compiler: Compiler = webpack(config as Configuration);
+    const compiler = webpack(config as Configuration);
 
     compiler.run((err, stats?) => {
       if (err) {
