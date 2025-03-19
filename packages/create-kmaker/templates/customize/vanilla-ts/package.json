@@ -15,7 +15,7 @@
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
-    "husky": "npx husky init && echo npx lint-staged> .husky/pre-commit",
+    "husky": "husky init && echo lint-staged> .husky/pre-commit",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -41,7 +41,7 @@
     "mini-css-extract-plugin": "^2",
     "prettier": "^3",
     "sass-loader": "^16",
-    "style-loader": "^4",
+    "terser-webpack-plugin": "^5",
     "ts-loader": "^9",
     "tsconfig-paths-webpack-plugin": "^4",
     "typescript": "^5",

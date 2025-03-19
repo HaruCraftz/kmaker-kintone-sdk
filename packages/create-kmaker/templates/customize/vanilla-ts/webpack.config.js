@@ -7,8 +7,14 @@ import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 import { merge } from 'webpack-merge';
 
-export default function getWebpackConfig(props) {
-  const { mode, outDir, appsConfig } = props;
+/**
+ * @param {Object} param
+ * @param {*} param.mode - 'production' | 'development'
+ * @param {*} param.outDir - 出力ディレクトリ
+ * @param {*} param.appsConfig - アプリ設定情報
+ * @returns {import('webpack').Configuration}
+ */
+export default function getWebpackConfig({ mode, outDir, appsConfig }) {
   const cwd = process.cwd();
 
   // エントリーポイント
@@ -22,7 +28,7 @@ export default function getWebpackConfig(props) {
     })
   );
 
-  // webpack共通設定
+  /** webpack共通設定 */
   const commonConfig = {
     mode,
     target: ['web', 'es2023'],
@@ -65,14 +71,16 @@ export default function getWebpackConfig(props) {
     },
     plugins: [
       new CleanWebpackPlugin(),
-      new MiniCssExtractPlugin({ filename: '[name].css' }),
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+      }),
       new webpack.DefinePlugin({
         APPS_CONFIG: JSON.stringify(appsConfig),
       }),
     ],
   };
 
-  // webpack環境別設定
+  /** webpack環境別設定 - production */
   const prodConfig = {
     optimization: {
       minimize: true,
@@ -85,6 +93,7 @@ export default function getWebpackConfig(props) {
     },
   };
 
+  /** webpack環境別設定 - development */
   const devConfig = {
     devtool: 'inline-source-map',
   };
