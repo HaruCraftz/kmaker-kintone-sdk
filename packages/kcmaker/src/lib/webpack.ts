@@ -13,7 +13,7 @@ export async function buildWithWebpack(params: {
   mode: Kcmaker.BuildMode;
   outDir?: string;
 }) {
-  console.log("🚀 Building with Webpack...");
+  console.log("🚀 Building with Webpack...\n");
 
   try {
     const { env, mode, outDir = "dist" } = params;
@@ -33,35 +33,34 @@ export async function buildWithWebpack(params: {
         console.error(err);
         process.exit(1);
       }
-
-      if (stats) {
-        const info = stats.toJson();
-
-        // コンパイルエラーの表示
-        if (stats.hasErrors()) {
-          console.error("Webpack compilation errors:\n" + info.errors?.map((e) => e.message || e).join("\n"));
-        }
-
-        // コンパイル警告の表示
-        if (stats.hasWarnings()) {
-          console.warn("Webpack compilation warnings:\n" + info.warnings?.map((w) => w.message || w).join("\n"));
-        }
-
-        // ビルド完了メッセージの表示
-        console.log("✅ Webpack build completed successfully.");
-        console.log(
-          stats.toString({
-            colors: true, // カラー出力を有効化
-            modules: false, // モジュール情報を非表示
-            children: false, // 子コンパイラ情報を非表示
-            chunks: false, // チャンク情報を非表示
-            chunkModules: false, // チャンクモジュール情報を非表示
-          }),
-        );
+      if (!stats) {
+        throw new Error("Webpack did not return any stats.");
       }
+
+      console.log(
+        stats.toString({
+          colors: true, // カラー出力を有効化
+          modules: false, // モジュール情報を非表示
+          children: false, // 子コンパイラ情報を非表示
+          chunks: false, // チャンク情報を非表示
+          chunkModules: false, // チャンクモジュール情報を非表示
+        }),
+      );
+
+      if (stats.hasErrors()) {
+        console.error("\n❌ Webpack build failed with errors.");
+        process.exit(1);
+      }
+
+      if (stats.hasWarnings()) {
+        console.error("\n⚠️ Webpack build completed with warnings.");
+        process.exit(1);
+      }
+
+      console.log("\n✅ Webpack build completed successfully.");
     });
-  } catch (error) {
-    console.error("Webpack build failed:", error);
+  } catch (error: any) {
+    console.error("Unexpected error:", error);
     throw error;
   }
 }

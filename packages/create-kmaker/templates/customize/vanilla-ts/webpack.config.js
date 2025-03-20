@@ -9,9 +9,9 @@ import { merge } from 'webpack-merge';
 
 /**
  * @param {Object} param
- * @param {*} param.mode - 'production' | 'development'
- * @param {*} param.outDir - 出力ディレクトリ
- * @param {*} param.appsConfig - アプリ設定情報
+ * @param {string} param.mode - 'production' | 'development'
+ * @param {string} param.outDir - 出力ディレクトリ
+ * @param {Object} param.appsConfig - アプリ設定情報
  * @returns {import('webpack').Configuration}
  */
 export default function getWebpackConfig({ mode, outDir, appsConfig }) {

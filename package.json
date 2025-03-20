@@ -1,14 +1,14 @@
 {
-    "name": "kistor-kintone-sdk",
-    "version": "1.0.0",
-    "description": "kintone SDK for Node.js",
-    "workspaces": [
-        "packages/*"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/HaruCraftz/kcmaker-kintone-sdk.git"
-    },
-    "license": "ISC",
-    "author": "Masanobu Sunohara"
+  "name": "kmaker-kintone-sdk",
+  "version": "1.0.0",
+  "description": "kintone SDK for Node.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaruCraftz/kcmaker-kintone-sdk.git"
+  },
+  "license": "ISC",
+  "author": "Masanobu Sunohara"
 }
