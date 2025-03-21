@@ -96,16 +96,16 @@ export async function buildWithWebpack(mode: Kcmaker.BuildMode, config: string, 
       );
 
       if (stats.hasErrors()) {
-        console.error("\n❌ Webpack build failed with errors.");
+        // 後続の処理を実行しない
         process.exit(1);
       }
 
-      if (stats.hasWarnings()) {
-        console.error("\n⚠️ Webpack build completed with warnings.");
-        process.exit(1);
-      }
+      // if (stats.hasWarnings()) {
+      //   console.error("\n⚠️ Webpack build completed with warnings.");
+      //   process.exit(1);
+      // }
 
-      console.log("\n✨ Webpack build completed successfully.");
+      // console.log("\n✨ Webpack build completed successfully.");
     });
   } catch (error: any) {
     console.error("Unexpected error:", error);

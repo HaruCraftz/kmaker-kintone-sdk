@@ -70,7 +70,7 @@ async function action() {
 
     // プロファイル作成
     await fs.writeJson(profilesPath, profiles, { spaces: 2 });
-    console.log(`Profile "${env}" has been saved.`);
+    console.log(`✨ Profile "${env}" has been saved.`);
   } catch (error: any) {
     console.error(`Unexpected error: \n${error.message}`);
     process.exit(1);

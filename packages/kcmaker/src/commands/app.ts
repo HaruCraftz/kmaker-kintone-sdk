@@ -68,9 +68,9 @@ async function action() {
 
     if (!appOutputDirExists) {
       await fs.copy(appTemplateDir, appOutputDir);
-      console.log(`The directory '${appName}' has been created.`);
+      console.log(`✨ The directory '${appName}' has been created.`);
     } else {
-      console.log(`The directory '${appName}' already exists.`);
+      console.log(`⚠️ The directory '${appName}' already exists.`);
     }
 
     // アプリの設定ファイルパスを取得
@@ -81,7 +81,7 @@ async function action() {
 
     // アプリ設定を保存
     await saveAppConfig(appsConfigPath, appName, newAppConfig);
-    console.log(`Configuration for app '${appName}' has been saved.`);
+    console.log(`✨ Configuration for app '${appName}' has been saved.`);
   } catch (error: any) {
     console.error(`Unexpected error: \n${error.message}`);
     process.exit(1);
