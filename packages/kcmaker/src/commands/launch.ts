@@ -115,7 +115,6 @@ async function action(options: {
       try {
         console.log(`\n🚀 Launching "${appName}" customization...\n`);
         await deployAppCustomization(appName, appsConfig, profile, scope, proxy);
-        console.log(`\n✅ "${appName}" was launched successfully.`);
       } catch (err: any) {
         console.error(`Error processing folder ${appName}: ${err.message}`);
       }
@@ -125,7 +124,7 @@ async function action(options: {
     const appsConfigPath = getAppsConfigPath(env);
     await fs.writeJson(appsConfigPath, appsConfig, { spaces: 2 });
   } catch (error: any) {
-    console.error(`Unexpected error: \n${error.message}`);
+    console.error(`Unexpected error:\n${error}`);
     process.exit(1);
   }
 }

@@ -32,17 +32,17 @@ export async function deployAppCustomization(
   }
 
   // cdnの旧アセットを除外
-  filterAssets(appConfig, "desktop", "customize.desktop");
-  filterAssets(appConfig, "mobile", "customize.mobile");
+  filterAssets(appConfig, "desktop", "dist");
+  filterAssets(appConfig, "mobile", "dist");
 
   // distフォルダ内のアセットをcdnに追加
   const files = await fs.readdir(appDistDir);
   files.forEach((file) => {
     const assetPath = path.join("dist", appName, file);
     if (file.includes("desktop")) {
-      file.endsWith(".js") ? appConfig.cdn.desktop.js.push(assetPath) : appConfig.cdn.desktop.css.push(assetPath);
+      file.endsWith(".js") ? appConfig.cdn.desktop.js.unshift(assetPath) : appConfig.cdn.desktop.css.unshift(assetPath);
     } else if (file.includes("mobile")) {
-      file.endsWith(".js") ? appConfig.cdn.mobile.js.push(assetPath) : appConfig.cdn.mobile.css.push(assetPath);
+      file.endsWith(".js") ? appConfig.cdn.mobile.js.unshift(assetPath) : appConfig.cdn.mobile.css.unshift(assetPath);
     }
   });
 

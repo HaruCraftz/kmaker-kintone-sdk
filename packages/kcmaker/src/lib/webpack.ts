@@ -1,6 +1,7 @@
 import path from "path";
 import { pathToFileURL } from "url";
 import webpack, { type Configuration } from "webpack";
+import { promisify } from "util";
 
 /**
  * webpack コンフィグモジュールの型
@@ -11,6 +12,7 @@ type WebpackConfigModule = Configuration | WebpackConfigFactory;
 
 /**
  * 動的インポート
+ * @param filePath - ファイルパス
  */
 async function dynamicImport(filePath: string): Promise<unknown> {
   try {
@@ -72,43 +74,29 @@ export async function buildWithWebpack(mode: Kcmaker.BuildMode, config: string, 
       }),
     );
 
-    // webpack の設定ファイルに型アサーションを行います
     const compiler = webpack(webpackConfig as Configuration);
+    const runCompiler = promisify(compiler.run.bind(compiler));
+    const stats = await runCompiler();
 
-    compiler.run((err, stats?) => {
-      if (err) {
-        console.error("A fatal error occurred during webpack execution:");
-        console.error(err);
-        process.exit(1);
-      }
-      if (!stats) {
-        throw new Error("Webpack did not return any stats.");
-      }
+    if (!stats) {
+      throw new Error("Webpack did not return any stats.");
+    }
 
-      console.log(
-        stats.toString({
-          colors: true, // カラー出力を有効化
-          modules: false, // モジュール情報を非表示
-          children: false, // 子コンパイラ情報を非表示
-          chunks: false, // チャンク情報を非表示
-          chunkModules: false, // チャンクモジュール情報を非表示
-        }),
-      );
+    console.log(
+      stats.toString({
+        colors: true, // カラー出力を有効化
+        modules: false, // モジュール情報を非表示
+        children: false, // 子コンパイラ情報を非表示
+        chunks: false, // チャンク情報を非表示
+        chunkModules: false, // チャンクモジュール情報を非表示
+      }),
+    );
 
-      if (stats.hasErrors()) {
-        // 後続の処理を実行しない
-        process.exit(1);
-      }
-
-      // if (stats.hasWarnings()) {
-      //   console.error("\n⚠️ Webpack build completed with warnings.");
-      //   process.exit(1);
-      // }
-
-      // console.log("\n✨ Webpack build completed successfully.");
-    });
+    if (stats.hasErrors()) {
+      process.exit(1);
+    }
   } catch (error: any) {
-    console.error("Unexpected error:", error);
+    console.error(`A fatal error occurred during webpack execution:\n${error}`);
     throw error;
   }
 }
