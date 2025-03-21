@@ -3,18 +3,14 @@ import fg from 'fast-glob';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 import { merge } from 'webpack-merge';
 
 /**
- * @param {Object} param
- * @param {string} param.mode - 'production' | 'development'
- * @param {string} param.outDir - 出力ディレクトリ
- * @param {Object} param.appsConfig - アプリ設定情報
+ * @param {string} mode - 'production' | 'development'
  * @returns {import('webpack').Configuration}
  */
-export default function getWebpackConfig({ mode, outDir, appsConfig }) {
+export default function getWebpackConfig(mode) {
   const cwd = process.cwd();
 
   // エントリーポイント
@@ -30,12 +26,11 @@ export default function getWebpackConfig({ mode, outDir, appsConfig }) {
 
   /** webpack共通設定 */
   const commonConfig = {
-    mode,
     target: ['web', 'es2023'],
     entry: entries,
     output: {
       filename: '[name].js',
-      path: path.resolve(cwd, outDir),
+      path: path.resolve(cwd, 'dist'),
     },
     optimization: {
       emitOnErrors: false,
@@ -76,9 +71,6 @@ export default function getWebpackConfig({ mode, outDir, appsConfig }) {
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
         filename: '[name].css',
-      }),
-      new webpack.DefinePlugin({
-        APPS_CONFIG: JSON.stringify(appsConfig),
       }),
     ],
   };
