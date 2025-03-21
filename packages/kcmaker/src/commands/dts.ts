@@ -76,7 +76,7 @@ async function action(options: { all: boolean; proxy: boolean }) {
     // "ALL" 選択時は全アプリに対して順次実行、個別選択時は選択アプリのみ実行
     for (const appName of appNames) {
       try {
-        console.log(`\n🚀 Generating type definitions for "${appName}"...`);
+        console.log(`\n🔧 Generating type definitions for "${appName}"...`);
         await generateTypeDefinitionsForApp(appsDir, appName, appsConfig, profiles[env], useProxy);
         console.log("✅ Type definitions have been generated.");
       } catch (err: any) {
