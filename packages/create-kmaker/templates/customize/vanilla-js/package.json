@@ -41,7 +41,6 @@
     "prettier": "^3",
     "sass-loader": "^16",
     "terser-webpack-plugin": "^5",
-    "webpack": "^5",
     "webpack-merge": "^6"
   }
 }

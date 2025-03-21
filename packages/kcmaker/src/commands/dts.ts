@@ -64,7 +64,6 @@ async function action(options: { all: boolean; proxy: boolean }) {
         process.exit(0);
       },
     });
-    console.log(""); // prompts後の改行
 
     const env = answers.env;
     const appNames = options.all ? appDirNames : answers.appNames!;
