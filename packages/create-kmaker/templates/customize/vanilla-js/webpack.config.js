@@ -2,7 +2,6 @@ import path from 'path';
 import fg from 'fast-glob';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 import { merge } from 'webpack-merge';
 
