@@ -21,8 +21,9 @@ export default function command() {
     .description("launch kintone customization for each environments.")
     .option("--all", "deploy all apps.", false)
     .option("--proxy", "execute with proxy.", false)
-    .addOption(new Option("-m, --mode <mode>", "build mode.").choices(["development", "production"]))
+    .option("--config <config>", "webpack config file.", "webpack.config.js")
     .addOption(new Option("-e, --env <env>", "target environment.").choices(Object.keys(ENVIRONMENTS)))
+    .addOption(new Option("-m, --mode <mode>", "build mode.").choices(["development", "production"]))
     .addOption(new Option("-s, --scope <scope>", "deploy scope.").choices(["all", "admin", "none"]).default("all"))
     .action(action);
 }
@@ -30,8 +31,9 @@ export default function command() {
 async function action(options: {
   all: boolean;
   proxy: boolean;
-  mode?: Kcmaker.BuildMode;
+  config: string;
   env?: Kcmaker.EnvironmentValue;
+  mode?: Kcmaker.BuildMode;
   scope: "all" | "admin" | "none";
 }) {
   try {
@@ -90,10 +92,11 @@ async function action(options: {
     });
     console.log(""); // prompts後の改行
 
+    const { config, scope } = options;
     const mode = options.mode || answers.mode!;
     const env = options.env || answers.env!;
     const appNames = options.all ? appDirNames : answers.appNames!;
-    const useProxy = Boolean(options.proxy);
+    const proxy = Boolean(options.proxy);
     const profile = profiles[env];
 
     // プロファイルを読み込む
@@ -105,13 +108,13 @@ async function action(options: {
     const appsConfig = await loadAppsConfig(env);
 
     // Webpack
-    await buildWithWebpack({ env, mode });
+    await buildWithWebpack(mode, config, appsConfig);
 
     // "ALL" 選択時は全アプリ、個別選択時は対象アプリのみ処理
     for (const appName of appNames) {
       try {
         console.log(`\n🚀 Launching "${appName}" customization...\n`);
-        await deployAppCustomization(appName, appsConfig, profile, options.scope, useProxy);
+        await deployAppCustomization(appName, appsConfig, profile, scope, proxy);
         console.log(`\n✅ "${appName}" was launched successfully.`);
       } catch (err: any) {
         console.error(`Error processing folder ${appName}: ${err.message}`);
