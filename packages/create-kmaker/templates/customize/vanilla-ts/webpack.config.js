@@ -77,6 +77,7 @@ export default function getWebpackConfig(mode) {
 
   /** webpack環境別設定 - production */
   const prodConfig = {
+    mode: 'production',
     optimization: {
       minimize: true,
       minimizer: [
@@ -90,6 +91,7 @@ export default function getWebpackConfig(mode) {
 
   /** webpack環境別設定 - development */
   const devConfig = {
+    mode: 'development',
     devtool: 'inline-source-map',
   };
 
