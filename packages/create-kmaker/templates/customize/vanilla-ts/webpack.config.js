@@ -75,31 +75,27 @@ export default function getWebpackConfig(mode) {
     ],
   };
 
-  /** webpack環境別設定 - production */
-  const prodConfig = {
-    mode: 'production',
-    optimization: {
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: { format: { comments: false } },
-          extractComments: false,
-        }),
-      ],
-    },
-  };
-
-  /** webpack環境別設定 - development */
-  const devConfig = {
-    mode: 'development',
-    devtool: 'inline-source-map',
-  };
-
   switch (mode) {
+    /** webpack環境別設定 - production */
     case 'production':
-      return merge(commonConfig, prodConfig);
+      return merge(commonConfig, {
+        mode: 'production',
+        optimization: {
+          minimize: true,
+          minimizer: [
+            new TerserPlugin({
+              terserOptions: { format: { comments: false } },
+              extractComments: false,
+            }),
+          ],
+        },
+      });
+    /** webpack環境別設定 - development */
     case 'development':
-      return merge(commonConfig, devConfig);
+      return merge(commonConfig, {
+        mode: 'development',
+        devtool: 'inline-source-map',
+      });
     default:
       throw new Error(`Invalid build mode: ${mode}`);
   }
